@@ -29,4 +29,5 @@ coverage
 
 *.tsbuildinfo
 
-src/tmp/
+# History files
+.history/

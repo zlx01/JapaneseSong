@@ -1,16 +1,9 @@
 <template>
-  <div class="lyrics-editor">
-    <div class="editor-container">
+  <div class="lyrics-editor" :class="{ 'preview-only': !isEditMode }">
+    <div class="editor-container" v-show="isEditMode">
       <div class="editor-header">
-        <h2>歌词编辑</h2>
         <div class="header-controls">
-          <button @click="exportLyrics" class="icon-btn" title="导出歌词">
-            <Upload class="h-4 w-4" />
-          </button>
-          <button @click="fileInput?.click()" class="icon-btn" title="导入歌词">
-            <Download class="h-4 w-4" />
-          </button>
-          <input ref="fileInput" type="file" accept=".json" class="hidden" @change="importLyrics" />
+          <!-- 导入导出按钮已移除 -->
         </div>
       </div>
 
@@ -130,16 +123,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, defineExpose } from 'vue'
-import {
-  Pencil,
-  Copy,
-  Trash2,
-  Plus,
-  SplitSquareHorizontal,
-  Download,
-  Upload,
-} from 'lucide-vue-next'
+import { ref, nextTick, defineExpose, defineProps } from 'vue'
+import { Pencil, Copy, Trash2, Plus, SplitSquareHorizontal } from 'lucide-vue-next'
+
+defineProps<{
+  isEditMode?: boolean
+}>()
 
 interface LyricLine {
   japanese: string
@@ -164,10 +153,7 @@ const furiganaInputs: (HTMLInputElement | null)[] = []
 const editInputs: (HTMLInputElement | null)[] = []
 const draggedIndex = ref<number>(-1)
 
-const fileInput = ref<HTMLInputElement | null>(null)
-
 const STORAGE_KEY = 'japanese-lyrics-editor-state'
-const AUTO_SAVE_INTERVAL = 30000 // 30秒
 
 const addNewLine = () => {
   if (newLine.value.trim()) {
@@ -441,6 +427,8 @@ defineExpose({
   lyrics,
   saveToLocalStorage,
   restoreFromLocalStorage,
+  exportLyrics,
+  importLyrics,
 })
 </script>
 
@@ -449,6 +437,10 @@ defineExpose({
   display: flex;
   gap: 2rem;
   padding: 2rem;
+}
+
+.lyrics-editor.preview-only {
+  justify-content: center;
 }
 
 .editor-container {
@@ -483,6 +475,11 @@ h2 {
   flex: 1;
   max-width: 600px;
   text-align: center;
+}
+
+.preview-only .preview-container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .lyrics-line {
