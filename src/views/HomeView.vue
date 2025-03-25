@@ -69,10 +69,10 @@ window.addEventListener('beforeunload', () => {
           <Eye v-else class="h-4 w-4" />
         </button>
         <button @click="exportLyrics" class="icon-btn" title="导出歌词">
-          <Upload class="h-4 w-4" />
+          <Download class="h-4 w-4" />
         </button>
         <button @click="fileInput?.click()" class="icon-btn" title="导入歌词">
-          <Download class="h-4 w-4" />
+          <Upload class="h-4 w-4" />
         </button>
         <input ref="fileInput" type="file" accept=".json" class="hidden" @change="importLyrics" />
       </div>
@@ -143,7 +143,7 @@ h1 {
 }
 
 /* 隐藏文件选择组件的文本提示 */
-input[type="file"] {
+input[type='file'] {
   color: transparent;
   width: 0;
   height: 0;
@@ -152,7 +152,7 @@ input[type="file"] {
   overflow: hidden;
 }
 
-input[type="file"]::-webkit-file-upload-button {
+input[type='file']::-webkit-file-upload-button {
   visibility: hidden;
 }
 </style>
