@@ -110,14 +110,15 @@
 
     <div class="preview-container">
       <div v-for="(line, index) in lyrics" :key="'preview-' + index" class="preview-line">
-        <div class="japanese-text">
+        <div class="japanese-text" :class="{ 'song-name': index === 0 }">
           <ruby v-for="(char, charIndex) in line.japanese" :key="charIndex">
             {{ char }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
           </ruby>
         </div>
-        <div class="chinese-text">{{ line.chinese }}</div>
+        <div class="chinese-text" :class="{ 'song-name': index === 0 }">{{ line.chinese }}</div>
         <div v-if="line.isBreak" class="preview-break"></div>
       </div>
+      <!-- <img class="poster" src="@/assets/poster/ichigo_hakusho.gif" /> -->
     </div>
   </div>
 </template>
@@ -528,6 +529,8 @@ h2 {
   min-height: 2rem;
   line-height: 2;
   transition: border-color 0.15s ease;
+  font-family: 'Noto Serif JP', 'Noto Serif';
+  margin-top: 20px;
 }
 
 .japanese-text:focus-within {
@@ -681,9 +684,22 @@ rt {
   padding: 0;
 }
 
+.japanese-text.song-name {
+  font-weight: bold;
+}
+
 .preview-line .chinese-text {
   color: hsl(240 4.9% 43.9%);
   font-size: 1rem;
+  font-family: 'Noto Serif SC', 'Noto Serif';
+}
+
+.chinese-text.song-name {
+  font-weight: bold;
+}
+
+.poster {
+  width: 600px;
 }
 
 .edit-mode {
