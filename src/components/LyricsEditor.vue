@@ -481,6 +481,10 @@ h2 {
 .preview-only .preview-container {
   max-width: 800px;
   margin: 0 auto;
+  padding-bottom: 20px;
+  background: #e0e8f2;
+  /* background: url('@/assets/poster/dd.webp') no-repeat;
+  background-size: cover; */
 }
 
 .lyrics-line {

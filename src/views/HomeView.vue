@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import LyricsEditor from '@/components/LyricsEditor.vue'
-import { Eye, Edit2, Upload, Download } from 'lucide-vue-next'
+import { Eye, Edit2, Upload, Download, Camera } from 'lucide-vue-next'
+import html2canvas from 'html2canvas'
 
 const isEditMode = ref(true)
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
@@ -35,6 +36,32 @@ const exportLyrics = () => {
 // 导入歌词功能
 const importLyrics = (event: Event) => {
   editorRef.value?.importLyrics(event)
+}
+
+// 导出预览为图片功能
+const exportPreviewAsImage = async () => {
+  const previewContainer = document.querySelector('.preview-container')
+  if (!previewContainer) return
+
+  try {
+    const canvas = await html2canvas(previewContainer as HTMLElement, {
+      backgroundColor: '#ffffff',
+      scale: 2, // 提高图片质量
+      logging: false,
+    })
+
+    // 将canvas转换为图片并下载
+    const image = canvas.toDataURL('image/png')
+    const link = document.createElement('a')
+    link.href = image
+    link.download = '歌词预览.png'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  } catch (error) {
+    console.error('导出图片失败:', error)
+    alert('导出图片失败，请重试')
+  }
 }
 
 // 监听组件挂载
@@ -73,6 +100,9 @@ window.addEventListener('beforeunload', () => {
         </button>
         <button @click="fileInput?.click()" class="icon-btn" title="导入歌词">
           <Upload class="h-4 w-4" />
+        </button>
+        <button @click="exportPreviewAsImage" class="icon-btn" title="保存预览为图片">
+          <Camera class="h-4 w-4" />
         </button>
         <input ref="fileInput" type="file" accept=".json" class="hidden" @change="importLyrics" />
       </div>
