@@ -464,7 +464,7 @@ defineExpose({
 h2 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: hsl(240 4.9% 33.9%);
+  color: #2c2418;
   margin: 0;
 }
 
@@ -481,8 +481,8 @@ h2 {
 .preview-only .preview-container {
   max-width: 800px;
   margin: 0 auto;
-  padding-bottom: 20px;
-  background: #e0e8f2;
+  /* padding: 2rem 1.5rem; */
+  background: linear-gradient(180deg, #f5f0e8 0%, #ebe4d6 100%);
   /* background: url('@/assets/poster/dd.webp') no-repeat;
   background-size: cover; */
 }
@@ -490,10 +490,10 @@ h2 {
 .lyrics-line {
   margin-bottom: 1rem;
   padding: 0;
-  border: 1px solid hsl(240 5.9% 90%);
+  border: 1px solid #e0d8cc;
   border-radius: 0.5rem;
   position: relative;
-  background: #fff;
+  background: #fffdf9;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -506,14 +506,14 @@ h2 {
   align-items: center;
   justify-content: center;
   cursor: move;
-  border-right: 1px solid hsl(240 5.9% 90%);
+  border-right: 1px solid #e0d8cc;
   padding: 1rem 0;
 }
 
 .drag-dots {
   width: 0.25rem;
   height: 1rem;
-  background-image: radial-gradient(circle, hsl(240 4.9% 83.9%) 1px, transparent 1.5px);
+  background-image: radial-gradient(circle, #c4b8a8 1px, transparent 1.5px);
   background-size: 0.25rem 0.25rem;
 }
 
@@ -528,17 +528,18 @@ h2 {
 .japanese-text {
   position: relative;
   padding: 0.75rem;
-  border: 1px solid hsl(240 5.9% 90%);
+  border: 1px solid #e0d8cc;
   border-radius: 0.5rem;
   min-height: 2rem;
   line-height: 2;
   transition: border-color 0.15s ease;
   font-family: 'Noto Serif JP', 'Noto Serif';
   margin-top: 20px;
+  color: #2c2418;
 }
 
 .japanese-text:focus-within {
-  border-color: hsl(240 5.9% 83.9%);
+  border-color: #c4b8a8;
 }
 
 .line-controls {
@@ -555,17 +556,17 @@ h2 {
   width: 2rem;
   height: 2rem;
   padding: 0;
-  border: 1px solid hsl(240 5.9% 90%);
+  border: 1px solid #d4cbbf;
   border-radius: 0.375rem;
   background: transparent;
-  color: hsl(240 4.9% 43.9%);
+  color: #6b5c4d;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .icon-btn:hover {
-  background: hsl(240 5.9% 96.9%);
-  color: hsl(240 4.9% 33.9%);
+  background: #f0ebe3;
+  color: #3a3028;
 }
 
 .icon-btn.delete {
@@ -587,7 +588,7 @@ h2 {
 }
 
 .char-wrapper:hover {
-  background-color: hsl(240 5.9% 96.9%);
+  background-color: #f0ebe3;
 }
 
 ruby {
@@ -596,14 +597,16 @@ ruby {
 
 rt {
   font-size: 0.75em;
-  color: hsl(240 4.9% 43.9%);
+  color: #6b5c4d;
 }
 
 .chinese-input {
   padding: 0.75rem;
-  border: 1px solid hsl(240 5.9% 90%);
+  border: 1px solid #e0d8cc;
   border-radius: 0.5rem;
   font-size: 1rem;
+  color: #2c2418;
+  background: #fffdf9;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -611,8 +614,8 @@ rt {
 
 .chinese-input:focus {
   outline: none;
-  border-color: hsl(142.1 76.2% 36.3%);
-  box-shadow: 0 0 0 2px hsl(142.1 76.2% 36.3% / 0.2);
+  border-color: #8b6b4a;
+  box-shadow: 0 0 0 2px rgba(139, 107, 74, 0.2);
 }
 
 .furigana-editor {
@@ -622,10 +625,11 @@ rt {
 
 .furigana-input {
   padding: 0.375rem 0.75rem;
-  border: 1px solid hsl(240 5.9% 90%);
+  border: 1px solid #e0d8cc;
   border-radius: 0.5rem;
-  background: #fff;
+  background: #fffdf9;
   min-width: 100px;
+  color: #2c2418;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -633,8 +637,8 @@ rt {
 
 .furigana-input:focus {
   outline: none;
-  border-color: hsl(142.1 76.2% 36.3%);
-  box-shadow: 0 0 0 2px hsl(142.1 76.2% 36.3% / 0.2);
+  border-color: #8b6b4a;
+  box-shadow: 0 0 0 2px rgba(139, 107, 74, 0.2);
 }
 
 .add-line {
@@ -646,8 +650,10 @@ rt {
 .new-line-input {
   flex: 1;
   padding: 0.75rem;
-  border: 1px solid hsl(240 5.9% 90%);
+  border: 1px solid #e0d8cc;
   border-radius: 0.5rem;
+  color: #2c2418;
+  background: #fffdf9;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -655,8 +661,8 @@ rt {
 
 .new-line-input:focus {
   outline: none;
-  border-color: hsl(142.1 76.2% 36.3%);
-  box-shadow: 0 0 0 2px hsl(142.1 76.2% 36.3% / 0.2);
+  border-color: #8b6b4a;
+  box-shadow: 0 0 0 2px rgba(139, 107, 74, 0.2);
 }
 
 .add-btn {
@@ -664,8 +670,8 @@ rt {
   align-items: center;
   justify-content: center;
   padding: 0.5rem 1rem;
-  background: hsl(142.1 76.2% 36.3%);
-  color: white;
+  background: #8b6b4a;
+  color: #fff;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -675,31 +681,42 @@ rt {
 }
 
 .add-btn:hover {
-  background: hsl(142.1 76.2% 33.3%);
+  background: #7a5c3e;
 }
 
 .preview-line {
   margin-bottom: 0;
 }
 
+.preview-line:last-child {
+  margin-bottom: 20px;
+}
+
 .preview-line .japanese-text {
   font-size: 1.2rem;
   border: none;
   padding: 0;
+  color: #2c2418;
+}
+
+.preview-line .japanese-text rt {
+  color: #6b5c4d;
 }
 
 .japanese-text.song-name {
   font-weight: bold;
+  color: #1a1208;
 }
 
 .preview-line .chinese-text {
-  color: hsl(240 4.9% 43.9%);
+  color: #5a4f42;
   font-size: 1rem;
   font-family: 'Noto Serif SC', 'Noto Serif';
 }
 
 .chinese-text.song-name {
   font-weight: bold;
+  color: #3a3028;
 }
 
 .poster {
@@ -715,9 +732,10 @@ rt {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  border: 1px solid hsl(142.1 76.2% 36.3%);
+  border: 1px solid #8b6b4a;
   border-radius: 0.5rem;
-  background: #fff;
+  background: #fffdf9;
+  color: #2c2418;
   transition:
     border-color 0.15s ease,
     box-shadow 0.15s ease;
@@ -725,20 +743,20 @@ rt {
 
 .edit-input:focus {
   outline: none;
-  border-color: hsl(142.1 76.2% 36.3%);
-  box-shadow: 0 0 0 2px hsl(142.1 76.2% 36.3% / 0.2);
+  border-color: #8b6b4a;
+  box-shadow: 0 0 0 2px rgba(139, 107, 74, 0.2);
 }
 
 .icon-btn.active {
-  background: hsl(142.1 76.2% 36.3% / 0.1);
-  border-color: hsl(142.1 76.2% 36.3%);
-  color: hsl(142.1 76.2% 36.3%);
+  background: rgba(139, 107, 74, 0.1);
+  border-color: #8b6b4a;
+  color: #8b6b4a;
 }
 
 .break-line {
   height: 1rem;
   margin: 1rem 0;
-  border-bottom: 1px dashed hsl(240 5.9% 90%);
+  border-bottom: 1px dashed #d4cbbf;
 }
 
 .preview-break {

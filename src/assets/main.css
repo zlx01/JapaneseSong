@@ -12,3 +12,9 @@
   font-family: 'Noto Serif SC';
   src: url('@/assets/fonts/NotoSerifSC.ttf') format('truetype');
 }
+
+body {
+  margin: 0;
+  background: #faf7f2;
+  color: #2c2418;
+}

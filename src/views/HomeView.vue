@@ -134,8 +134,9 @@ window.addEventListener('beforeunload', () => {
 
 h1 {
   text-align: center;
-  color: #333;
+  color: #2c2418;
   margin: 0;
+  font-family: 'Noto Serif JP', 'Noto Serif', serif;
 }
 
 .icon-btn {
@@ -145,27 +146,27 @@ h1 {
   width: 2rem;
   height: 2rem;
   padding: 0;
-  border: 1px solid hsl(240 5.9% 90%);
+  border: 1px solid #d4cbbf;
   border-radius: 0.375rem;
   background: transparent;
-  color: hsl(240 4.9% 43.9%);
+  color: #6b5c4d;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .icon-btn:hover {
-  background: hsl(240 5.9% 96.9%);
-  color: hsl(240 4.9% 33.9%);
+  background: #f0ebe3;
+  color: #3a3028;
 }
 
 .preview-btn {
-  color: hsl(142.1 76.2% 36.3%);
-  border-color: hsl(142.1 76.2% 36.3% / 0.2);
+  color: #8b6b4a;
+  border-color: rgba(139, 107, 74, 0.3);
 }
 
 .preview-btn:hover {
-  background: hsl(142.1 76.2% 36.3% / 0.1);
-  border-color: hsl(142.1 76.2% 36.3% / 0.3);
+  background: rgba(139, 107, 74, 0.1);
+  border-color: rgba(139, 107, 74, 0.4);
 }
 
 .hidden {
