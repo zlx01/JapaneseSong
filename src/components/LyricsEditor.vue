@@ -481,10 +481,7 @@ h2 {
 .preview-only .preview-container {
   max-width: 800px;
   margin: 0 auto;
-  /* padding: 2rem 1.5rem; */
   background: linear-gradient(180deg, #f5f0e8 0%, #ebe4d6 100%);
-  /* background: url('@/assets/poster/dd.webp') no-repeat;
-  background-size: cover; */
 }
 
 .lyrics-line {
@@ -533,7 +530,7 @@ h2 {
   min-height: 2rem;
   line-height: 2;
   transition: border-color 0.15s ease;
-  font-family: 'Noto Serif JP', 'Noto Serif';
+  /* font-family: 'Noto Serif JP', 'Noto Serif'; */
   margin-top: 20px;
   color: #2c2418;
 }
@@ -711,7 +708,7 @@ rt {
 .preview-line .chinese-text {
   color: #5a4f42;
   font-size: 1rem;
-  font-family: 'Noto Serif SC', 'Noto Serif';
+  /* font-family: 'Noto Serif SC', 'Noto Serif'; */
 }
 
 .chinese-text.song-name {

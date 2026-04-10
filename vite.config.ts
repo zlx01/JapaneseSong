@@ -7,6 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.VITE_BASE_URL || '/jp-song/',
   plugins: [
     vue(),
     vueJsx(),
