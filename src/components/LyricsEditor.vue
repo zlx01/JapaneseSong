@@ -7,91 +7,103 @@
         </div>
       </div>
 
-      <div v-for="(line, index) in lyrics" :key="index" class="lyrics-line">
-        <div
-          class="drag-handle"
-          draggable="true"
-          @dragstart="handleDragStart(index)"
-          @dragover.prevent
-          @dragenter.prevent
-          @drop="handleDrop(index)"
-        >
-          <div class="drag-dots"></div>
-        </div>
-        <div class="lyrics-content">
-          <div class="japanese-text">
-            <div v-if="line.isEditing" class="edit-mode">
-              <input
-                v-model="line.editingText"
-                class="edit-input"
-                @keyup.enter="saveEdit(index)"
-                @blur="saveEdit(index)"
-                :ref="
-                  (el) => {
-                    if (el) editInputs[index] = el as HTMLInputElement
-                  }
-                "
-              />
-            </div>
-            <div v-else>
-              <span
-                v-for="(char, charIndex) in line.japanese"
-                :key="charIndex"
-                @click="handleCharClick($event, index, charIndex)"
-                class="char-wrapper"
-              >
-                <ruby
-                  >{{ char
-                  }}<rt v-if="line.furiganaMap[charIndex]">{{
-                    line.furiganaMap[charIndex]
-                  }}</rt></ruby
-                >
-              </span>
-            </div>
-            <div class="line-controls">
-              <button
-                @click="startEdit(index)"
-                class="icon-btn"
-                v-if="!line.isEditing"
-                title="编辑"
-              >
-                <Pencil class="h-4 w-4" />
-              </button>
-              <button @click="copyLine(index)" class="icon-btn" title="复制">
-                <Copy class="h-4 w-4" />
-              </button>
-              <button
-                @click="toggleBreak(index)"
-                class="icon-btn"
-                :class="{ active: line.isBreak }"
-                title="分段"
-              >
-                <SplitSquareHorizontal class="h-4 w-4" />
-              </button>
-              <button @click="deleteLine(index)" class="icon-btn delete" title="删除">
-                <Trash2 class="h-4 w-4" />
-              </button>
-            </div>
+      <div v-for="(line, index) in lyrics" :key="index" class="lyrics-row">
+        <div class="lyrics-line">
+          <div
+            class="drag-handle"
+            draggable="true"
+            @dragstart="handleDragStart(index)"
+            @dragover.prevent
+            @dragenter.prevent
+            @drop="handleDrop(index)"
+          >
+            <div class="drag-dots"></div>
           </div>
-          <input v-model="line.chinese" class="chinese-input" placeholder="输入中文翻译" />
+          <div class="lyrics-content">
+            <div class="japanese-text">
+              <div v-if="line.isEditing" class="edit-mode">
+                <input
+                  v-model="line.editingText"
+                  class="edit-input"
+                  @keyup.enter="saveEdit(index)"
+                  @blur="saveEdit(index)"
+                  :ref="
+                    (el) => {
+                      if (el) editInputs[index] = el as HTMLInputElement
+                    }
+                  "
+                />
+              </div>
+              <div v-else>
+                <span
+                  v-for="(char, charIndex) in line.japanese"
+                  :key="charIndex"
+                  @click="handleCharClick($event, index, charIndex)"
+                  class="char-wrapper"
+                >
+                  <ruby
+                    >{{ char
+                    }}<rt v-if="line.furiganaMap[charIndex]">{{
+                      line.furiganaMap[charIndex]
+                    }}</rt></ruby
+                  >
+                </span>
+              </div>
+              <div class="line-controls">
+                <button
+                  @click="startEdit(index)"
+                  class="icon-btn"
+                  v-if="!line.isEditing"
+                  title="编辑"
+                >
+                  <Pencil class="h-4 w-4" />
+                </button>
+                <button @click="copyLine(index)" class="icon-btn" title="复制">
+                  <Copy class="h-4 w-4" />
+                </button>
+                <button
+                  @click="toggleBreak(index)"
+                  class="icon-btn"
+                  :class="{ active: line.isBreak }"
+                  title="分段"
+                >
+                  <SplitSquareHorizontal class="h-4 w-4" />
+                </button>
+                <button @click="deleteLine(index)" class="icon-btn delete" title="删除">
+                  <Trash2 class="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+            <input v-model="line.chinese" class="chinese-input" placeholder="输入中文翻译" />
+          </div>
+
+          <!-- 假名编辑弹窗 -->
+          <div v-if="line.showFuriganaEditor" class="furigana-editor" :style="line.editorStyle">
+            <input
+              v-model="line.currentFurigana"
+              class="furigana-input"
+              placeholder="输入假名"
+              @blur="handleFuriganaBlur(index)"
+              @keyup.enter="handleFuriganaBlur(index)"
+              :ref="
+                (el) => {
+                  if (el) furiganaInputs[index] = el as HTMLInputElement
+                }
+              "
+            />
+          </div>
+          <div v-if="line.isBreak" class="break-line"></div>
         </div>
 
-        <!-- 假名编辑弹窗 -->
-        <div v-if="line.showFuriganaEditor" class="furigana-editor" :style="line.editorStyle">
-          <input
-            v-model="line.currentFurigana"
-            class="furigana-input"
-            placeholder="输入假名"
-            @blur="handleFuriganaBlur(index)"
-            @keyup.enter="handleFuriganaBlur(index)"
-            :ref="
-              (el) => {
-                if (el) furiganaInputs[index] = el as HTMLInputElement
-              }
-            "
-          />
+        <div class="preview-line inline-preview">
+          <div class="japanese-text" :class="{ 'song-name': index === 0 }">
+            <ruby v-for="(char, charIndex) in line.japanese" :key="charIndex">
+              {{ char }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
+            </ruby>
+          </div>
+          <div class="chinese-text" :class="{ 'song-name': index === 0 }">{{ line.chinese }}</div>
+          <div v-if="line.isBreak" class="preview-break"></div>
         </div>
-        <div v-if="line.isBreak" class="break-line"></div>
       </div>
 
       <div class="add-line">
@@ -108,7 +120,7 @@
       </div>
     </div>
 
-    <div class="preview-container">
+    <div class="preview-container" v-show="!isEditMode">
       <div v-for="(line, index) in lyrics" :key="'preview-' + index" class="preview-line">
         <div class="japanese-text" :class="{ 'song-name': index === 0 }">
           <ruby v-for="(char, charIndex) in line.japanese" :key="charIndex">
@@ -292,7 +304,7 @@ const handleFuriganaBlur = (index: number) => {
 
 const copyLine = (index: number) => {
   const line = lyrics.value[index]
-  lyrics.value.splice(index + 1, 0, {
+  lyrics.value.push({
     japanese: line.japanese,
     furiganaMap: { ...line.furiganaMap },
     chinese: line.chinese,
@@ -471,6 +483,11 @@ defineExpose({
   max-width: 600px;
 }
 
+.lyrics-editor:not(.preview-only) .editor-container {
+  max-width: none;
+  width: 100%;
+}
+
 .editor-header {
   display: flex;
   justify-content: space-between;
@@ -517,6 +534,13 @@ h2 {
     border-color 0.15s ease,
     box-shadow 0.15s ease;
   display: flex;
+}
+
+.lyrics-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
 }
 
 .drag-handle {
@@ -705,6 +729,24 @@ rt {
 
 .preview-line {
   margin-bottom: 0;
+}
+
+.inline-preview {
+  padding: 1rem;
+  border: 1px solid #e0d8cc;
+  border-radius: 0.5rem;
+  background: #fffdf9;
+  margin-bottom: 1rem;
+}
+
+.inline-preview .japanese-text {
+  margin-top: 20px;
+}
+
+.inline-preview .preview-break {
+  height: 1rem;
+  margin: 1rem 0;
+  border-bottom: 1px dashed #d4cbbf;
 }
 
 .preview-line:last-child {
