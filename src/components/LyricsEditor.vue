@@ -423,6 +423,27 @@ const restoreFromLocalStorage = () => {
   }
 }
 
+// 从导入数据加载
+const loadData = (data: ExportData) => {
+  if (data.version && Array.isArray(data.lyrics)) {
+    lyrics.value = data.lyrics.map((line) => ({
+      japanese: line.japanese,
+      furiganaMap: line.furiganaMap,
+      chinese: line.chinese,
+      isBreak: line.isBreak,
+      showFuriganaEditor: false,
+      editorStyle: {
+        top: '0px',
+        left: '0px',
+      },
+      currentFurigana: '',
+      selectedCharIndex: -1,
+      isEditing: false,
+      editingText: '',
+    }))
+  }
+}
+
 // 导出方法供父组件使用
 defineExpose({
   lyrics,
@@ -430,6 +451,7 @@ defineExpose({
   restoreFromLocalStorage,
   exportLyrics,
   importLyrics,
+  loadData,
 })
 </script>
 

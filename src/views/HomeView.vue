@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
-import { Eye, Edit2, Upload, Download, Camera } from 'lucide-vue-next'
+import { Eye, Edit2, Upload, Download, Camera, BookOpen } from 'lucide-vue-next'
 import html2canvas from 'html2canvas'
+
+const router = useRouter()
 
 const isEditMode = ref(true)
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
@@ -64,6 +67,12 @@ const exportPreviewAsImage = async () => {
   }
 }
 
+// 打开示例页面
+const openExample = () => {
+  const route = router.resolve({ name: 'example' })
+  window.open(route.href, '_blank')
+}
+
 // 监听组件挂载
 onMounted(() => {
   editorRef.value?.restoreFromLocalStorage()
@@ -103,6 +112,9 @@ window.addEventListener('beforeunload', () => {
         </button>
         <button @click="exportPreviewAsImage" class="icon-btn" title="保存预览为图片">
           <Camera class="h-4 w-4" />
+        </button>
+        <button @click="openExample" class="icon-btn" title="查看示例">
+          <BookOpen class="h-4 w-4" />
         </button>
         <input ref="fileInput" type="file" accept=".json" class="hidden" @change="importLyrics" />
       </div>

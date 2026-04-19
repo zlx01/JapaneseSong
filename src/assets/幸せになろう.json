@@ -1,0 +1,600 @@
+{
+  "version": "1.0",
+  "lyrics": [
+    {
+      "japanese": "幸せになろう",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "歌手：宇多田光",
+      "furiganaMap": {
+        "0": "か",
+        "1": "しゅ",
+        "3": "う",
+        "4": "た",
+        "5": "だ",
+        "6": "ヒカル"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "詞：宇多田光",
+      "furiganaMap": {
+        "0": "し",
+        "2": "う",
+        "3": "た",
+        "4": "だ",
+        "5": "ヒカル"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "曲：宇多田光",
+      "furiganaMap": {
+        "0": "きょく",
+        "2": "う",
+        "3": "た",
+        "4": "だ",
+        "5": "ヒカル"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "何も聞かずに続けて",
+      "furiganaMap": {
+        "0": "なに",
+        "2": "き",
+        "6": "つづ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "これが「しあわせ」なら",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "もっと欲しい",
+      "furiganaMap": {
+        "3": "ほ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "忘れそうになるその都度に",
+      "furiganaMap": {
+        "0": "わす",
+        "9": "つ",
+        "10": "ど"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "また交わしたい静かな誓い",
+      "furiganaMap": {
+        "2": "か",
+        "7": "しず",
+        "10": "ちか"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "初めてだったらよかったのに",
+      "furiganaMap": {
+        "0": "はじ"
+      },
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "幸せになろう",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "オフィシャルな野望",
+      "furiganaMap": {
+        "7": "や",
+        "8": "ぼう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "明日は今日よりも… (ヲー!)",
+      "furiganaMap": {
+        "0": "あし",
+        "1": "た",
+        "3": "きょ",
+        "4": "う"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "恋人になろう",
+      "furiganaMap": {
+        "0": "こい",
+        "1": "びと"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "手つないで歩こう",
+      "furiganaMap": {
+        "0": "て",
+        "5": "ある"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "あなたを誰よりも… (ヲー!)",
+      "furiganaMap": {
+        "4": "だれ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "幸せになろう",
+      "furiganaMap": {
+        "0": "しあわ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "悲しみは利用",
+      "furiganaMap": {
+        "0": "かな",
+        "4": "り",
+        "5": "よう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "寄り道もしたけど… (ヲー!)",
+      "furiganaMap": {
+        "0": "よ",
+        "2": "みち"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "今すぐに（会おう）",
+      "furiganaMap": {
+        "0": "いま",
+        "5": "あ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "思い出は昨日",
+      "furiganaMap": {
+        "0": "おも",
+        "2": "で",
+        "4": "きの",
+        "5": "う"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "明日は今日よりも… (ヲー!)",
+      "furiganaMap": {
+        "0": "あし",
+        "1": "た",
+        "3": "きょ",
+        "4": "う"
+      },
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "その続きを知りたくて",
+      "furiganaMap": {
+        "2": "つづ",
+        "5": "し"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "賢者を訪ねた",
+      "furiganaMap": {
+        "0": "けん",
+        "1": "じゃ",
+        "3": "たず"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "すると彼は言いました",
+      "furiganaMap": {
+        "3": "かれ",
+        "5": "い"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "教えない",
+      "furiganaMap": {
+        "0": "おし"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "何度も同じ扉のまえに辿り着いては",
+      "furiganaMap": {
+        "0": "なん",
+        "1": "ど",
+        "3": "おな",
+        "5": "とびら",
+        "10": "たど",
+        "12": "つ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "ノックしかけたんだけど",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "君が手を貸すしてくれたなら",
+      "furiganaMap": {
+        "0": "き",
+        "2": "て",
+        "4": "か"
+      },
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "幸せになろう",
+      "furiganaMap": {
+        "0": "しあわ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "あくまでも希望",
+      "furiganaMap": {
+        "5": "き",
+        "6": "ぼう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "現実は意外と… (ヲー!)",
+      "furiganaMap": {
+        "0": "げん",
+        "1": "じつ",
+        "3": "い",
+        "4": "がい"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "決めないでおこう",
+      "furiganaMap": {
+        "0": "き"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "不確かな世相",
+      "furiganaMap": {
+        "0": "ふた",
+        "1": "しか",
+        "4": "せ",
+        "5": "そう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "だからこそあなたと… (ヲー!)",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "幸せになろう",
+      "furiganaMap": {
+        "0": "しあわ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "言い訳は無用",
+      "furiganaMap": {
+        "0": "い",
+        "2": "わけ",
+        "4": "む",
+        "5": "よう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "遠まわりしてでも… (ヲー!)",
+      "furiganaMap": {
+        "0": "おう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "待ち合わせしよう",
+      "furiganaMap": {
+        "0": "まち",
+        "2": "あ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "跳び箱の向こう",
+      "furiganaMap": {
+        "0": "と",
+        "2": "ばこ",
+        "4": "む"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "両手でしっかりと",
+      "furiganaMap": {
+        "0": "りょう",
+        "1": "て"
+      },
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "I'm gonna be happy...",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "I'm gonna be happy girl...",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "Do you really really want to see",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "a brighter day,",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "then look this way at me",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "Or would you rather stay unhappy",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "another day, then go ahead, not me.",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "幸せになろう",
+      "furiganaMap": {
+        "0": "しあわ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "当然の野望",
+      "furiganaMap": {
+        "0": "とう",
+        "1": "ぜん",
+        "3": "や",
+        "4": "ぼう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "明日は今日よりも… (ヲー!)",
+      "furiganaMap": {
+        "0": "あし",
+        "1": "た",
+        "3": "きょ",
+        "4": "う"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "約束をしよう",
+      "furiganaMap": {
+        "0": "や",
+        "1": "そく"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "夜通し話そう",
+      "furiganaMap": {
+        "0": "よ",
+        "1": "どお",
+        "3": "はな"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "私達はずっと… (ヲー!)",
+      "furiganaMap": {
+        "0": "わたし",
+        "1": "だち"
+      },
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "幸せになろう",
+      "furiganaMap": {
+        "0": "しあわ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "悲しみは利用",
+      "furiganaMap": {
+        "0": "かな",
+        "4": "り",
+        "5": "よう"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "寄り道もしたけど… (ヲー!)",
+      "furiganaMap": {
+        "0": "よ",
+        "2": "みち"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "今すぐに会おう",
+      "furiganaMap": {
+        "0": "いま",
+        "4": "あ"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "思い出の向こう",
+      "furiganaMap": {
+        "0": "おも",
+        "2": "で",
+        "4": "む"
+      },
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "明日は今日よりも… (ヲー!)",
+      "furiganaMap": {
+        "0": "あし",
+        "1": "た",
+        "3": "きょ",
+        "4": "う"
+      },
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "Do you really really want to see",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "a brighter day,",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "then look this way at me",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "Or would you rather stay unhappy",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "another day, then go ahead, not me...",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": true
+    },
+    {
+      "japanese": "Do you really really want to see",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "a brighter day,",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "then look this way at me",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "Or would you rather stay unhappy",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    },
+    {
+      "japanese": "another day, then go ahead, not me...",
+      "furiganaMap": {},
+      "chinese": "",
+      "isBreak": false
+    }
+  ]
+}
