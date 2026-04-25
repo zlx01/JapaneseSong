@@ -3,7 +3,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
 import { getSongById, getSongs } from '@/lib/songCatalog'
-import { ChevronUp } from 'lucide-vue-next'
+import { ChevronDown, ChevronUp } from 'lucide-vue-next'
 
 const route = useRoute()
 const router = useRouter()
@@ -12,6 +12,9 @@ const songs = getSongs()
 const copyStatus = ref('')
 const EDITOR_STORAGE_KEY = 'japanese-lyrics-editor-state'
 const showBackToTop = ref(false)
+const showGoToBottom = ref(false)
+const isCopyToastError = computed(() => copyStatus.value.includes('失败'))
+let copyStatusTimer: number | null = null
 
 const selectedSongId = computed(() => {
   if (typeof route.params.songId === 'string') return route.params.songId
@@ -51,8 +54,13 @@ const copySongLink = async () => {
     copyStatus.value = '复制失败，请手动复制地址栏链接'
   }
 
-  window.setTimeout(() => {
+  if (copyStatusTimer !== null) {
+    window.clearTimeout(copyStatusTimer)
+  }
+
+  copyStatusTimer = window.setTimeout(() => {
     copyStatus.value = ''
+    copyStatusTimer = null
   }, 2000)
 }
 
@@ -79,10 +87,17 @@ const editCurrentSong = async () => {
 
 const handleScroll = () => {
   showBackToTop.value = window.scrollY > 240
+  const distanceToBottom =
+    document.documentElement.scrollHeight - (window.scrollY + window.innerHeight)
+  showGoToBottom.value = distanceToBottom > 240
 }
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const scrollToBottom = () => {
+  window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
 }
 
 onMounted(() => {
@@ -92,6 +107,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  if (copyStatusTimer !== null) {
+    window.clearTimeout(copyStatusTimer)
+  }
 })
 </script>
 
@@ -106,7 +124,6 @@ onUnmounted(() => {
       <button v-if="selectedSongData" class="edit-song-btn" @click="editCurrentSong">
         编辑当前歌曲
       </button>
-      <span v-if="copyStatus" class="copy-status">{{ copyStatus }}</span>
     </div>
 
     <div class="content">
@@ -134,6 +151,17 @@ onUnmounted(() => {
     </div>
 
     <button
+      v-show="showGoToBottom"
+      class="go-to-bottom-btn"
+      type="button"
+      title="去底部"
+      aria-label="去底部"
+      @click="scrollToBottom"
+    >
+      <ChevronDown class="h-5 w-5" />
+    </button>
+
+    <button
       v-show="showBackToTop"
       class="back-to-top-btn"
       type="button"
@@ -143,6 +171,16 @@ onUnmounted(() => {
     >
       <ChevronUp class="h-5 w-5" />
     </button>
+
+    <div
+      v-show="copyStatus"
+      class="copy-toast"
+      :class="{ 'is-error': isCopyToastError }"
+      role="status"
+      aria-live="polite"
+    >
+      {{ copyStatus }}
+    </div>
   </div>
 </template>
 
@@ -221,11 +259,6 @@ onUnmounted(() => {
 .edit-song-btn:hover {
   background: rgba(139, 107, 74, 0.15);
   color: #5f472f;
-}
-
-.copy-status {
-  color: #6b5c4d;
-  font-size: 0.875rem;
 }
 
 .content {
@@ -309,15 +342,73 @@ onUnmounted(() => {
   transition: all 0.2s ease;
 }
 
+.go-to-bottom-btn {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(139, 107, 74, 0.35);
+  border-radius: 9999px;
+  background: rgba(139, 107, 74, 0.92);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  transition: all 0.2s ease;
+}
+
+.go-to-bottom-btn:hover {
+  transform: translateY(-2px);
+  background: #7a5c3e;
+}
+
 .back-to-top-btn:hover {
   transform: translateY(-2px);
   background: #7a5c3e;
+}
+
+.copy-toast {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 60;
+  max-width: min(70vw, 420px);
+  padding: 0.625rem 0.875rem;
+  border: 1px solid rgba(35, 114, 72, 0.28);
+  border-radius: 0.5rem;
+  background: #f0faf4;
+  color: #1f5f3d;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  box-shadow: 0 8px 18px rgba(31, 95, 61, 0.14);
+}
+
+.copy-toast.is-error {
+  border-color: rgba(185, 63, 63, 0.28);
+  background: #fff5f5;
+  color: #9f2f2f;
+  box-shadow: 0 8px 18px rgba(159, 47, 47, 0.14);
 }
 
 @media (max-width: 768px) {
   .back-to-top-btn {
     right: 1rem;
     bottom: 1rem;
+  }
+
+  .go-to-bottom-btn {
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  .copy-toast {
+    top: 0.75rem;
+    right: 0.75rem;
+    max-width: calc(100vw - 1.5rem);
   }
 }
 </style>

@@ -16,8 +16,11 @@
             @dragover.prevent
             @dragenter.prevent
             @drop="handleDrop(index)"
+            @dblclick="moveLineToBottom(index)"
+            title="双击可置底"
           >
             <div class="drag-dots"></div>
+            <span class="drag-hover-tip">双击可置底</span>
           </div>
           <div class="lyrics-content">
             <div class="japanese-text">
@@ -308,7 +311,7 @@ const handleFuriganaBlur = (index: number) => {
 
 const copyLine = (index: number) => {
   const line = lyrics.value[index]
-  lyrics.value.push({
+  lyrics.value.splice(index + 1, 0, {
     japanese: line.japanese,
     furiganaMap: { ...line.furiganaMap },
     chinese: line.chinese,
@@ -323,6 +326,12 @@ const copyLine = (index: number) => {
     editingText: '',
     isBreak: false,
   })
+}
+
+const moveLineToBottom = (index: number) => {
+  if (index < 0 || index >= lyrics.value.length - 1) return
+  const [line] = lyrics.value.splice(index, 1)
+  lyrics.value.push(line)
 }
 
 const insertLineBelow = (index: number) => {
@@ -616,6 +625,7 @@ h2 {
 }
 
 .drag-handle {
+  position: relative;
   width: 2rem;
   display: flex;
   align-items: center;
@@ -623,6 +633,28 @@ h2 {
   cursor: move;
   border-right: 1px solid #e0d8cc;
   padding: 1rem 0;
+}
+
+.drag-hover-tip {
+  position: absolute;
+  left: calc(100% + 0.5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.35rem;
+  border: 1px solid #d4cbbf;
+  background: #fffdf9;
+  color: #6b5c4d;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 5;
+}
+
+.drag-handle:hover .drag-hover-tip {
+  opacity: 1;
 }
 
 .drag-dots {

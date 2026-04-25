@@ -2,7 +2,16 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
-import { Eye, Edit2, Upload, Download, Camera, BookOpen, ChevronUp } from 'lucide-vue-next'
+import {
+  Eye,
+  Edit2,
+  Upload,
+  Download,
+  Camera,
+  BookOpen,
+  ChevronUp,
+  ChevronDown,
+} from 'lucide-vue-next'
 import html2canvas from 'html2canvas'
 
 const router = useRouter()
@@ -12,13 +21,21 @@ const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
 let autoSaveTimer: number | null = null
 const fileInput = ref<HTMLInputElement | null>(null)
 const showBackToTop = ref(false)
+const showGoToBottom = ref(false)
 
 const handleScroll = () => {
   showBackToTop.value = window.scrollY > 240
+  const distanceToBottom =
+    document.documentElement.scrollHeight - (window.scrollY + window.innerHeight)
+  showGoToBottom.value = distanceToBottom > 240
 }
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const scrollToBottom = () => {
+  window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
 }
 
 // 开始自动保存
@@ -138,6 +155,16 @@ window.addEventListener('beforeunload', () => {
     </div>
     <LyricsEditor ref="editorRef" :isEditMode="isEditMode" />
     <button
+      v-show="showGoToBottom"
+      class="go-to-bottom-btn"
+      type="button"
+      title="去底部"
+      aria-label="去底部"
+      @click="scrollToBottom"
+    >
+      <ChevronDown class="h-5 w-5" />
+    </button>
+    <button
       v-show="showBackToTop"
       class="back-to-top-btn"
       type="button"
@@ -236,9 +263,38 @@ h1 {
   background: #7a5c3e;
 }
 
+.go-to-bottom-btn {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(139, 107, 74, 0.35);
+  border-radius: 9999px;
+  background: rgba(139, 107, 74, 0.92);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  transition: all 0.2s ease;
+}
+
+.go-to-bottom-btn:hover {
+  transform: translateY(-2px);
+  background: #7a5c3e;
+}
+
 @media (max-width: 768px) {
   .back-to-top-btn {
     right: 1rem;
+    bottom: 1rem;
+  }
+
+  .go-to-bottom-btn {
+    left: 1rem;
     bottom: 1rem;
   }
 }
