@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
 import { getSongById, getSongs } from '@/lib/songCatalog'
+import { ChevronUp } from 'lucide-vue-next'
 
 const route = useRoute()
 const router = useRouter()
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
 const songs = getSongs()
 const copyStatus = ref('')
+const EDITOR_STORAGE_KEY = 'japanese-lyrics-editor-state'
+const showBackToTop = ref(false)
 
 const selectedSongId = computed(() => {
   if (typeof route.params.songId === 'string') return route.params.songId
@@ -52,14 +55,57 @@ const copySongLink = async () => {
     copyStatus.value = ''
   }, 2000)
 }
+
+const editCurrentSong = async () => {
+  if (!selectedSongData.value) return
+
+  const normalizedLyrics = selectedSongData.value.lyrics.map((line) => ({
+    japanese: line.japanese,
+    furiganaMap: line.furiganaMap ?? {},
+    chinese: line.chinese,
+    isBreak: line.isBreak ?? false,
+  }))
+
+  localStorage.setItem(
+    EDITOR_STORAGE_KEY,
+    JSON.stringify({
+      lyrics: normalizedLyrics,
+      lastSaved: new Date().toISOString(),
+    }),
+  )
+
+  await router.push({ name: 'home' })
+}
+
+const handleScroll = () => {
+  showBackToTop.value = window.scrollY > 240
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+onMounted(() => {
+  handleScroll()
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
   <div class="example">
     <div class="title-container">
-      <h1>示例预览</h1>
+      <h1>歌曲一览</h1>
       <router-link to="/" class="back-btn">返回编辑器</router-link>
-      <button v-if="selectedSong" class="copy-link-btn" @click="copySongLink">复制当前歌曲链接</button>
+      <button v-if="selectedSong" class="copy-link-btn" @click="copySongLink">
+        复制当前歌曲链接
+      </button>
+      <button v-if="selectedSongData" class="edit-song-btn" @click="editCurrentSong">
+        编辑当前歌曲
+      </button>
       <span v-if="copyStatus" class="copy-status">{{ copyStatus }}</span>
     </div>
 
@@ -86,6 +132,17 @@ const copySongLink = async () => {
         </template>
       </section>
     </div>
+
+    <button
+      v-show="showBackToTop"
+      class="back-to-top-btn"
+      type="button"
+      title="返回顶部"
+      aria-label="返回顶部"
+      @click="scrollToTop"
+    >
+      <ChevronUp class="h-5 w-5" />
+    </button>
   </div>
 </template>
 
@@ -146,6 +203,24 @@ const copySongLink = async () => {
 .copy-link-btn:hover {
   background: #f0ebe3;
   color: #3a3028;
+}
+
+.edit-song-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(139, 107, 74, 0.35);
+  border-radius: 0.375rem;
+  background: rgba(139, 107, 74, 0.08);
+  color: #7a5c3e;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.edit-song-btn:hover {
+  background: rgba(139, 107, 74, 0.15);
+  color: #5f472f;
 }
 
 .copy-status {
@@ -213,5 +288,36 @@ const copySongLink = async () => {
   align-items: center;
   justify-content: center;
   color: #6b5c4d;
+}
+
+.back-to-top-btn {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(139, 107, 74, 0.35);
+  border-radius: 9999px;
+  background: rgba(139, 107, 74, 0.92);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  transition: all 0.2s ease;
+}
+
+.back-to-top-btn:hover {
+  transform: translateY(-2px);
+  background: #7a5c3e;
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    right: 1rem;
+    bottom: 1rem;
+  }
 }
 </style>

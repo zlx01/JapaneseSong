@@ -61,6 +61,9 @@
                 <button @click="copyLine(index)" class="icon-btn" title="复制">
                   <Copy class="h-4 w-4" />
                 </button>
+                <button @click="insertLineBelow(index)" class="icon-btn" title="在下方插入行">
+                  <Plus class="h-4 w-4" />
+                </button>
                 <button
                   @click="toggleBreak(index)"
                   class="icon-btn"
@@ -98,7 +101,8 @@
         <div class="preview-line inline-preview">
           <div class="japanese-text" :class="{ 'song-name': index === 0 }">
             <ruby v-for="(char, charIndex) in line.japanese" :key="charIndex">
-              {{ char }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
+              {{ char
+              }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
             </ruby>
           </div>
           <div class="chinese-text" :class="{ 'song-name': index === 0 }">{{ line.chinese }}</div>
@@ -136,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, defineExpose, defineProps } from 'vue'
+import { ref, nextTick } from 'vue'
 import { Pencil, Copy, Trash2, Plus, SplitSquareHorizontal } from 'lucide-vue-next'
 
 defineProps<{
@@ -321,6 +325,24 @@ const copyLine = (index: number) => {
   })
 }
 
+const insertLineBelow = (index: number) => {
+  lyrics.value.splice(index + 1, 0, {
+    japanese: '',
+    furiganaMap: {},
+    chinese: '',
+    showFuriganaEditor: false,
+    editorStyle: {
+      top: '0px',
+      left: '0px',
+    },
+    currentFurigana: '',
+    selectedCharIndex: -1,
+    isEditing: false,
+    editingText: '',
+    isBreak: false,
+  })
+}
+
 const deleteLine = (index: number) => {
   lyrics.value.splice(index, 1)
 }
@@ -341,7 +363,7 @@ interface ExportData {
   lyrics: ExportLyricLine[]
 }
 
-const exportLyrics = () => {
+const exportLyrics = async () => {
   const exportData: ExportData = {
     version: '1.0',
     lyrics: lyrics.value.map((line) => ({
@@ -352,11 +374,61 @@ const exportLyrics = () => {
     })),
   }
 
-  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
+  const content = JSON.stringify(exportData, null, 2)
+  const firstLineTitle = exportData.lyrics[0]?.japanese?.trim() ?? ''
+  const safeBaseName = firstLineTitle
+    .replace(/[\\/:*?"<>|]/g, '')
+    .replace(/[\u0000-\u001f]/g, '')
+    .trim()
+    .replace(/[. ]+$/g, '')
+  const fileName = `${safeBaseName || 'lyrics'}.json`
+
+  // 支持的浏览器中弹出系统保存对话框，让用户选择保存路径
+  if ('showSaveFilePicker' in window) {
+    try {
+      const pickerWindow = window as Window & {
+        showSaveFilePicker?: (options?: {
+          suggestedName?: string
+          types?: Array<{
+            description?: string
+            accept: Record<string, string[]>
+          }>
+        }) => Promise<{
+          createWritable: () => Promise<{
+            write: (data: string) => Promise<void>
+            close: () => Promise<void>
+          }>
+        }>
+      }
+
+      const fileHandle = await pickerWindow.showSaveFilePicker?.({
+        suggestedName: fileName,
+        types: [
+          {
+            description: 'JSON Files',
+            accept: { 'application/json': ['.json'] },
+          },
+        ],
+      })
+
+      if (fileHandle) {
+        const writable = await fileHandle.createWritable()
+        await writable.write(content)
+        await writable.close()
+        return
+      }
+    } catch (error) {
+      const isCancelError = error instanceof DOMException && error.name === 'AbortError'
+      if (isCancelError) return
+      console.error('使用系统保存对话框失败，已回退到浏览器下载：', error)
+    }
+  }
+
+  const blob = new Blob([content], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = 'lyrics.json'
+  a.download = fileName
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)

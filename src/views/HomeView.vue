@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
-import { Eye, Edit2, Upload, Download, Camera, BookOpen } from 'lucide-vue-next'
+import { Eye, Edit2, Upload, Download, Camera, BookOpen, ChevronUp } from 'lucide-vue-next'
 import html2canvas from 'html2canvas'
 
 const router = useRouter()
@@ -11,6 +11,15 @@ const isEditMode = ref(true)
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
 let autoSaveTimer: number | null = null
 const fileInput = ref<HTMLInputElement | null>(null)
+const showBackToTop = ref(false)
+
+const handleScroll = () => {
+  showBackToTop.value = window.scrollY > 240
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 
 // 开始自动保存
 const startAutoSave = () => {
@@ -77,12 +86,15 @@ const openExample = () => {
 onMounted(() => {
   editorRef.value?.restoreFromLocalStorage()
   startAutoSave()
+  handleScroll()
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
 // 监听组件卸载
 onUnmounted(() => {
   stopAutoSave()
   editorRef.value?.saveToLocalStorage() // 卸载前保存一次
+  window.removeEventListener('scroll', handleScroll)
 })
 
 // 监听页面关闭
@@ -110,7 +122,12 @@ window.addEventListener('beforeunload', () => {
         <button @click="fileInput?.click()" class="icon-btn" title="导入歌词">
           <Upload class="h-4 w-4" />
         </button>
-        <button @click="exportPreviewAsImage" class="icon-btn" title="保存预览为图片">
+        <button
+          v-if="!isEditMode"
+          @click="exportPreviewAsImage"
+          class="icon-btn"
+          title="保存预览为图片"
+        >
           <Camera class="h-4 w-4" />
         </button>
         <button @click="openExample" class="icon-btn" title="查看示例">
@@ -120,6 +137,16 @@ window.addEventListener('beforeunload', () => {
       </div>
     </div>
     <LyricsEditor ref="editorRef" :isEditMode="isEditMode" />
+    <button
+      v-show="showBackToTop"
+      class="back-to-top-btn"
+      type="button"
+      title="返回顶部"
+      aria-label="返回顶部"
+      @click="scrollToTop"
+    >
+      <ChevronUp class="h-5 w-5" />
+    </button>
   </div>
 </template>
 
@@ -183,6 +210,37 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+.back-to-top-btn {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(139, 107, 74, 0.35);
+  border-radius: 9999px;
+  background: rgba(139, 107, 74, 0.92);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  transition: all 0.2s ease;
+}
+
+.back-to-top-btn:hover {
+  transform: translateY(-2px);
+  background: #7a5c3e;
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    right: 1rem;
+    bottom: 1rem;
+  }
 }
 
 /* 隐藏文件选择组件的文本提示 */
