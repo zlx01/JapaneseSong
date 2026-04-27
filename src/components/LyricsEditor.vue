@@ -356,6 +356,14 @@ const deleteLine = (index: number) => {
   lyrics.value.splice(index, 1)
 }
 
+const resetLyrics = () => {
+  lyrics.value = []
+  newLine.value = ''
+  selectedLineIndex.value = -1
+  draggedIndex.value = -1
+  localStorage.removeItem(STORAGE_KEY)
+}
+
 const toggleBreak = (index: number) => {
   lyrics.value[index].isBreak = !lyrics.value[index].isBreak
 }
@@ -542,6 +550,7 @@ defineExpose({
   lyrics,
   saveToLocalStorage,
   restoreFromLocalStorage,
+  resetLyrics,
   exportLyrics,
   importLyrics,
   loadData,

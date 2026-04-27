@@ -7,6 +7,7 @@ import {
   Edit2,
   Upload,
   Download,
+  RotateCcw,
   Camera,
   BookOpen,
   ChevronUp,
@@ -60,6 +61,15 @@ const togglePreview = () => {
 // 导出歌词功能
 const exportLyrics = () => {
   editorRef.value?.exportLyrics()
+}
+
+const resetLyrics = () => {
+  if (!editorRef.value?.lyrics.length) return
+
+  const confirmed = window.confirm('确认重置吗？这会清空当前所有歌词。')
+  if (!confirmed) return
+
+  editorRef.value.resetLyrics()
 }
 
 // 导入歌词功能
@@ -132,6 +142,9 @@ window.addEventListener('beforeunload', () => {
         >
           <Edit2 v-if="isEditMode" class="h-4 w-4" />
           <Eye v-else class="h-4 w-4" />
+        </button>
+        <button v-if="isEditMode" @click="resetLyrics" class="icon-btn" title="重置歌词">
+          <RotateCcw class="h-4 w-4" />
         </button>
         <button @click="exportLyrics" class="icon-btn" title="导出歌词">
           <Download class="h-4 w-4" />
