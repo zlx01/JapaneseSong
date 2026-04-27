@@ -4,7 +4,7 @@
     {
       "japanese": "幸せになろう",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "一起变得幸福吧",
       "isBreak": false
     },
     {
@@ -17,7 +17,7 @@
         "5": "だ",
         "6": "ヒカル"
       },
-      "chinese": "",
+      "chinese": "歌手：宇多田光",
       "isBreak": false
     },
     {
@@ -25,14 +25,14 @@
       "furiganaMap": {
         "0": "さく",
         "1": "し",
-        "3": "さく",
+        "3": "さっ",
         "4": "きょく",
         "6": "う",
         "7": "た",
         "8": "だ",
         "9": "ヒカル"
       },
-      "chinese": "",
+      "chinese": "作词/作曲：宇多田光",
       "isBreak": false
     },
     {
@@ -42,13 +42,13 @@
         "2": "き",
         "6": "つづ"
       },
-      "chinese": "",
+      "chinese": "什么都别问 就这样继续下去",
       "isBreak": false
     },
     {
       "japanese": "これが「しあわせ」なら",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "如果这就是“幸福”",
       "isBreak": false
     },
     {
@@ -56,7 +56,7 @@
       "furiganaMap": {
         "3": "ほ"
       },
-      "chinese": "",
+      "chinese": "我还想要更多",
       "isBreak": false
     },
     {
@@ -66,7 +66,7 @@
         "9": "つ",
         "10": "ど"
       },
-      "chinese": "",
+      "chinese": "每当快要忘记的时候",
       "isBreak": false
     },
     {
@@ -76,7 +76,7 @@
         "7": "しず",
         "10": "ちか"
       },
-      "chinese": "",
+      "chinese": "都想再次交换那安静的誓言",
       "isBreak": false
     },
     {
@@ -84,13 +84,13 @@
       "furiganaMap": {
         "0": "はじ"
       },
-      "chinese": "",
+      "chinese": "要是这一切是第一次就好了",
       "isBreak": true
     },
     {
       "japanese": "幸せになろう",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "一起变得幸福吧",
       "isBreak": false
     },
     {
@@ -99,7 +99,7 @@
         "7": "や",
         "8": "ぼう"
       },
-      "chinese": "",
+      "chinese": "堂堂正正的野心",
       "isBreak": false
     },
     {
@@ -110,7 +110,7 @@
         "3": "きょ",
         "4": "う"
       },
-      "chinese": "",
+      "chinese": "明天会比今天更加……（喔!）",
       "isBreak": false
     },
     {
@@ -119,7 +119,7 @@
         "0": "こい",
         "1": "びと"
       },
-      "chinese": "",
+      "chinese": "成为恋人吧",
       "isBreak": false
     },
     {
@@ -128,7 +128,7 @@
         "0": "て",
         "5": "ある"
       },
-      "chinese": "",
+      "chinese": "手牵着手一起走吧",
       "isBreak": false
     },
     {
@@ -136,7 +136,7 @@
       "furiganaMap": {
         "4": "だれ"
       },
-      "chinese": "",
+      "chinese": "比任何人都更爱你……（喔!）",
       "isBreak": false
     },
     {
@@ -144,7 +144,7 @@
       "furiganaMap": {
         "0": "しあわ"
       },
-      "chinese": "",
+      "chinese": "一起变得幸福吧",
       "isBreak": false
     },
     {
@@ -154,7 +154,7 @@
         "4": "り",
         "5": "よう"
       },
-      "chinese": "",
+      "chinese": "连悲伤也拿来利用",
       "isBreak": false
     },
     {
@@ -163,7 +163,7 @@
         "0": "よ",
         "2": "みち"
       },
-      "chinese": "",
+      "chinese": "虽然也曾绕过远路……（喔!）",
       "isBreak": false
     },
     {
@@ -172,7 +172,7 @@
         "0": "いま",
         "5": "あ"
       },
-      "chinese": "",
+      "chinese": "现在立刻（见面吧）",
       "isBreak": false
     },
     {
@@ -183,7 +183,7 @@
         "4": "きの",
         "5": "う"
       },
-      "chinese": "",
+      "chinese": "回忆已是昨天",
       "isBreak": false
     },
     {
@@ -194,7 +194,7 @@
         "3": "きょ",
         "4": "う"
       },
-      "chinese": "",
+      "chinese": "明天会比今天更加……（喔!）",
       "isBreak": true
     },
     {
@@ -203,7 +203,7 @@
         "2": "つづ",
         "5": "し"
       },
-      "chinese": "",
+      "chinese": "想知道那之后的续篇",
       "isBreak": false
     },
     {
@@ -213,7 +213,7 @@
         "1": "じゃ",
         "3": "たず"
       },
-      "chinese": "",
+      "chinese": "去拜访了贤者",
       "isBreak": false
     },
     {
@@ -222,7 +222,7 @@
         "3": "かれ",
         "5": "い"
       },
-      "chinese": "",
+      "chinese": "于是他这样说了",
       "isBreak": false
     },
     {
@@ -230,7 +230,7 @@
       "furiganaMap": {
         "0": "おし"
       },
-      "chinese": "",
+      "chinese": "不告诉你",
       "isBreak": false
     },
     {
@@ -243,13 +243,13 @@
         "10": "たど",
         "12": "つ"
       },
-      "chinese": "",
+      "chinese": "无数次抵达同一扇门前",
       "isBreak": false
     },
     {
       "japanese": "ノックしかけたんだけど",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "虽然我几乎就要敲门了",
       "isBreak": false
     },
     {
@@ -259,7 +259,7 @@
         "2": "て",
         "4": "か"
       },
-      "chinese": "",
+      "chinese": "如果你愿意向我伸出援手",
       "isBreak": true
     },
     {
@@ -267,7 +267,7 @@
       "furiganaMap": {
         "0": "しあわ"
       },
-      "chinese": "",
+      "chinese": "一起变得幸福吧",
       "isBreak": false
     },
     {
@@ -276,7 +276,7 @@
         "5": "き",
         "6": "ぼう"
       },
-      "chinese": "",
+      "chinese": "终究也只是希望",
       "isBreak": false
     },
     {
@@ -287,7 +287,7 @@
         "3": "い",
         "4": "がい"
       },
-      "chinese": "",
+      "chinese": "现实却意外地……（喔!）",
       "isBreak": false
     },
     {
@@ -295,7 +295,7 @@
       "furiganaMap": {
         "0": "き"
       },
-      "chinese": "",
+      "chinese": "先别下定论吧",
       "isBreak": false
     },
     {
@@ -306,13 +306,13 @@
         "4": "せ",
         "5": "そう"
       },
-      "chinese": "",
+      "chinese": "这个捉摸不定的世道",
       "isBreak": false
     },
     {
       "japanese": "だからこそあなたと… (ヲー!)",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "正因为如此 才更想和你一起……（喔!）",
       "isBreak": true
     },
     {
@@ -320,7 +320,7 @@
       "furiganaMap": {
         "0": "しあわ"
       },
-      "chinese": "",
+      "chinese": "一起变得幸福吧",
       "isBreak": false
     },
     {
@@ -331,7 +331,7 @@
         "4": "む",
         "5": "よう"
       },
-      "chinese": "",
+      "chinese": "借口无用",
       "isBreak": false
     },
     {
@@ -339,7 +339,7 @@
       "furiganaMap": {
         "0": "おう"
       },
-      "chinese": "",
+      "chinese": "哪怕绕远路也要……（喔!）",
       "isBreak": false
     },
     {
@@ -348,7 +348,7 @@
         "0": "まち",
         "2": "あ"
       },
-      "chinese": "",
+      "chinese": "来约好碰面吧",
       "isBreak": false
     },
     {
@@ -358,7 +358,7 @@
         "2": "ばこ",
         "4": "む"
       },
-      "chinese": "",
+      "chinese": "在跳箱的另一头",
       "isBreak": false
     },
     {
@@ -367,49 +367,49 @@
         "0": "りょう",
         "1": "て"
       },
-      "chinese": "",
+      "chinese": "用双手牢牢地",
       "isBreak": true
     },
     {
       "japanese": "I'm gonna be happy...",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "我要变得幸福……",
       "isBreak": false
     },
     {
       "japanese": "I'm gonna be happy girl...",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "我要做个幸福的女孩……",
       "isBreak": false
     },
     {
       "japanese": "Do you really really want to see",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "你是否真的真的想看见",
       "isBreak": false
     },
     {
       "japanese": "a brighter day,",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "一个更明亮的明天，",
       "isBreak": false
     },
     {
       "japanese": "then look this way at me",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "那就朝我这边看吧",
       "isBreak": false
     },
     {
       "japanese": "Or would you rather stay unhappy",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "还是说你宁愿继续不快乐",
       "isBreak": false
     },
     {
       "japanese": "another day, then go ahead, not me.",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "再过一天的话 那你就继续吧 反正不是我。",
       "isBreak": true
     },
     {
@@ -417,7 +417,7 @@
       "furiganaMap": {
         "0": "しあわ"
       },
-      "chinese": "",
+      "chinese": "一起变得幸福吧",
       "isBreak": false
     },
     {
@@ -428,7 +428,7 @@
         "3": "や",
         "4": "ぼう"
       },
-      "chinese": "",
+      "chinese": "理所当然的野心",
       "isBreak": false
     },
     {
@@ -439,7 +439,7 @@
         "3": "きょ",
         "4": "う"
       },
-      "chinese": "",
+      "chinese": "明天会比今天更加……（喔!）",
       "isBreak": false
     },
     {
@@ -448,7 +448,7 @@
         "0": "や",
         "1": "そく"
       },
-      "chinese": "",
+      "chinese": "来做个约定吧",
       "isBreak": false
     },
     {
@@ -458,7 +458,7 @@
         "1": "どお",
         "3": "はな"
       },
-      "chinese": "",
+      "chinese": "通宵聊个够吧",
       "isBreak": false
     },
     {
@@ -467,7 +467,7 @@
         "0": "わたし",
         "1": "だち"
       },
-      "chinese": "",
+      "chinese": "我们会一直……（喔!）",
       "isBreak": true
     },
     {
@@ -475,7 +475,7 @@
       "furiganaMap": {
         "0": "しあわ"
       },
-      "chinese": "",
+      "chinese": "一起变得幸福吧",
       "isBreak": false
     },
     {
@@ -485,7 +485,7 @@
         "4": "り",
         "5": "よう"
       },
-      "chinese": "",
+      "chinese": "连悲伤也拿来利用",
       "isBreak": false
     },
     {
@@ -494,7 +494,7 @@
         "0": "よ",
         "2": "みち"
       },
-      "chinese": "",
+      "chinese": "虽然也曾绕过远路……（喔!）",
       "isBreak": false
     },
     {
@@ -503,7 +503,7 @@
         "0": "いま",
         "4": "あ"
       },
-      "chinese": "",
+      "chinese": "现在立刻见面吧",
       "isBreak": false
     },
     {
@@ -513,7 +513,7 @@
         "2": "で",
         "4": "む"
       },
-      "chinese": "",
+      "chinese": "在回忆的彼岸",
       "isBreak": false
     },
     {
@@ -524,67 +524,67 @@
         "3": "きょ",
         "4": "う"
       },
-      "chinese": "",
+      "chinese": "明天会比今天更加……（喔!）",
       "isBreak": true
     },
     {
       "japanese": "Do you really really want to see",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "你是否真的真的想看见",
       "isBreak": false
     },
     {
       "japanese": "a brighter day,",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "一个更明亮的明天，",
       "isBreak": false
     },
     {
       "japanese": "then look this way at me",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "那就朝我这边看吧",
       "isBreak": false
     },
     {
       "japanese": "Or would you rather stay unhappy",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "还是说你宁愿继续不快乐",
       "isBreak": false
     },
     {
       "japanese": "another day, then go ahead, not me...",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "再过一天的话 那你就继续吧 反正不是我……",
       "isBreak": true
     },
     {
       "japanese": "Do you really really want to see",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "你是否真的真的想看见",
       "isBreak": false
     },
     {
       "japanese": "a brighter day,",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "一个更明亮的明天，",
       "isBreak": false
     },
     {
       "japanese": "then look this way at me",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "那就朝我这边看吧",
       "isBreak": false
     },
     {
       "japanese": "Or would you rather stay unhappy",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "还是说你宁愿继续不快乐",
       "isBreak": false
     },
     {
       "japanese": "another day, then go ahead, not me...",
       "furiganaMap": {},
-      "chinese": "",
+      "chinese": "再过一天的话 那你就继续吧 反正不是我……",
       "isBreak": false
     }
   ]

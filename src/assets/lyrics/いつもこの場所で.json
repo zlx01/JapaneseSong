@@ -1,0 +1,551 @@
+{
+  "version": "1.0",
+  "lyrics": [
+    {
+      "japanese": "いつもこの場所で",
+      "furiganaMap": {
+        "5": "ば",
+        "6": "しょ"
+      },
+      "chinese": "一直在这个地方",
+      "isBreak": false
+    },
+    {
+      "japanese": "歌手：彩音",
+      "furiganaMap": {
+        "0": "か",
+        "1": "しゅ",
+        "3": "あや",
+        "4": "ね"
+      },
+      "chinese": "歌手：彩音",
+      "isBreak": false
+    },
+    {
+      "japanese": "作詞/作曲：志倉千代丸",
+      "furiganaMap": {
+        "0": "さく",
+        "1": "し",
+        "3": "さっ",
+        "4": "きょく",
+        "6": "し",
+        "7": "くら",
+        "8": "ち",
+        "9": "よ",
+        "10": "まる"
+      },
+      "chinese": "作词/作曲：志仓千代丸",
+      "isBreak": false
+    },
+    {
+      "japanese": "いつか僕らが 未来 振り返る時には",
+      "furiganaMap": {
+        "3": "ぼく",
+        "7": "み",
+        "8": "らい",
+        "10": "ふ",
+        "12": "かえ",
+        "14": "とき"
+      },
+      "chinese": "总有一天当我们回首未来之时",
+      "isBreak": false
+    },
+    {
+      "japanese": "いつもこの場所で キミが笑って",
+      "furiganaMap": {
+        "5": "ば",
+        "6": "しょ",
+        "12": "わら"
+      },
+      "chinese": "你会一直在这个地方微笑着",
+      "isBreak": false
+    },
+    {
+      "japanese": "残酷に過ぎ行く 時の中で",
+      "furiganaMap": {
+        "0": "ざん",
+        "1": "こく",
+        "3": "す",
+        "5": "ゆ",
+        "8": "とき",
+        "10": "なか"
+      },
+      "chinese": "在残酷流逝的时光之中",
+      "isBreak": false
+    },
+    {
+      "japanese": "探し求めていたもの",
+      "furiganaMap": {
+        "0": "さが",
+        "2": "もと"
+      },
+      "chinese": "寻找追求着的事物",
+      "isBreak": false
+    },
+    {
+      "japanese": "すれ違う世界に",
+      "furiganaMap": {
+        "2": "ちが",
+        "4": "せ",
+        "5": "かい"
+      },
+      "chinese": "在彼此交错而过的世界里",
+      "isBreak": false
+    },
+    {
+      "japanese": "閉じ込められた 目に見えぬヒカリ",
+      "furiganaMap": {
+        "0": "と",
+        "2": "こ",
+        "8": "め",
+        "10": "み"
+      },
+      "chinese": "被封存在其中的是那看不见的光",
+      "isBreak": false
+    },
+    {
+      "japanese": "特別なほど 愛する者へ",
+      "furiganaMap": {
+        "0": "とく",
+        "1": "べつ",
+        "6": "あい",
+        "9": "もの"
+      },
+      "chinese": "面对那珍爱到无可替代的人",
+      "isBreak": false
+    },
+    {
+      "japanese": "打ち明けられずにいた",
+      "furiganaMap": {
+        "0": "う",
+        "2": "あ"
+      },
+      "chinese": "却始终没能坦白出来",
+      "isBreak": false
+    },
+    {
+      "japanese": "過ごした日々の 一つ一つが",
+      "furiganaMap": {
+        "0": "す",
+        "4": "ひ",
+        "5": "び",
+        "8": "ひと",
+        "10": "ひと"
+      },
+      "chinese": "一路走来的每一天 每一刻",
+      "isBreak": false
+    },
+    {
+      "japanese": "戸惑いをピリオドに変える",
+      "furiganaMap": {
+        "0": "と",
+        "1": "まど",
+        "9": "か"
+      },
+      "chinese": "都将迷惘化作句点",
+      "isBreak": true
+    },
+    {
+      "japanese": "いつか僕らが 未来 振り返る時には",
+      "furiganaMap": {
+        "3": "ぼく",
+        "7": "み",
+        "8": "らい",
+        "10": "ふ",
+        "12": "かえ",
+        "14": "とき"
+      },
+      "chinese": "总有一天当我们回首未来之时",
+      "isBreak": false
+    },
+    {
+      "japanese": "いつもこの場所で キミが笑って",
+      "furiganaMap": {
+        "5": "ば",
+        "6": "しょ",
+        "12": "わら"
+      },
+      "chinese": "你会一直在这个地方微笑着",
+      "isBreak": false
+    },
+    {
+      "japanese": "重ね合った みんなの想いが",
+      "furiganaMap": {
+        "0": "かさ",
+        "2": "あ",
+        "10": "おも"
+      },
+      "chinese": "大家彼此重叠交汇的心意",
+      "isBreak": false
+    },
+    {
+      "japanese": "世界線を創る",
+      "furiganaMap": {
+        "0": "せ",
+        "1": "かい",
+        "2": "せん",
+        "4": "つく"
+      },
+      "chinese": "将会创造出世界线",
+      "isBreak": false
+    },
+    {
+      "japanese": "どんな雨にも",
+      "furiganaMap": {
+        "3": "あめ"
+      },
+      "chinese": "无论怎样的大雨",
+      "isBreak": false
+    },
+    {
+      "japanese": "負けぬ信じ合える気持ち",
+      "furiganaMap": {
+        "0": "ま",
+        "3": "しん",
+        "5": "あ",
+        "8": "き",
+        "9": "も"
+      },
+      "chinese": "都无法击败彼此信任的心情",
+      "isBreak": false
+    },
+    {
+      "japanese": "負けぬ信じ合える気持ち",
+      "furiganaMap": {
+        "0": "ま",
+        "3": "しん",
+        "5": "あ",
+        "8": "き",
+        "9": "も"
+      },
+      "chinese": "都无法击败彼此信任的心情",
+      "isBreak": false
+    },
+    {
+      "japanese": "この空の観測者",
+      "furiganaMap": {
+        "2": "そら",
+        "4": "かん",
+        "5": "そく",
+        "6": "しゃ"
+      },
+      "chinese": "这片天空的观测者",
+      "isBreak": false
+    },
+    {
+      "japanese": "この空は明日の証明",
+      "furiganaMap": {
+        "2": "そら",
+        "4": "あ",
+        "5": "した",
+        "7": "しょう",
+        "8": "めい"
+      },
+      "chinese": "这片天空就是明天的证明",
+      "isBreak": true
+    },
+    {
+      "japanese": "いつまでも変わらぬ 景色なんて",
+      "furiganaMap": {
+        "5": "か",
+        "10": "けい",
+        "11": "しき"
+      },
+      "chinese": "永远不变的景色这种事",
+      "isBreak": false
+    },
+    {
+      "japanese": "絶対に叶わぬ夢",
+      "furiganaMap": {
+        "0": "ぜっ",
+        "1": "たい",
+        "3": "かな",
+        "6": "ゆめ"
+      },
+      "chinese": "终究是绝对无法实现的梦",
+      "isBreak": false
+    },
+    {
+      "japanese": "奇跡のような出会い",
+      "furiganaMap": {
+        "0": "き",
+        "1": "せき",
+        "6": "で",
+        "7": "あ"
+      },
+      "chinese": "宛如奇迹般的相遇",
+      "isBreak": false
+    },
+    {
+      "japanese": "せめてあの日を 消したりしないで",
+      "furiganaMap": {
+        "5": "ひ",
+        "8": "け"
+      },
+      "chinese": "至少请不要把那一天抹去",
+      "isBreak": false
+    },
+    {
+      "japanese": "好きな気持ちが勇気に変わる",
+      "furiganaMap": {
+        "0": "す",
+        "3": "き",
+        "4": "も",
+        "7": "ゆう",
+        "8": "き",
+        "10": "か"
+      },
+      "chinese": "喜欢的心情会化作勇气",
+      "isBreak": false
+    },
+    {
+      "japanese": "科学的じゃないけど",
+      "furiganaMap": {
+        "0": "か",
+        "1": "がく",
+        "2": "てき"
+      },
+      "chinese": "虽然这并不科学",
+      "isBreak": false
+    },
+    {
+      "japanese": "戸惑いのない キミの言葉が",
+      "furiganaMap": {
+        "0": "と",
+        "1": "まど",
+        "10": "こと",
+        "11": "ば"
+      },
+      "chinese": "你那毫不迷惘的话语",
+      "isBreak": false
+    },
+    {
+      "japanese": "本当の答えを導く",
+      "furiganaMap": {
+        "0": "ほん",
+        "1": "とう",
+        "3": "こた",
+        "6": "みちび"
+      },
+      "chinese": "会引导出真正的答案",
+      "isBreak": true
+    },
+    {
+      "japanese": "あの日僕らは 出会い 大切な何かを",
+      "furiganaMap": {
+        "2": "ひ",
+        "3": "ぼく",
+        "7": "で",
+        "8": "あ",
+        "11": "たい",
+        "12": "せつ",
+        "14": "なに"
+      },
+      "chinese": "那一天我们相遇 并找到了某种重要的东西",
+      "isBreak": false
+    },
+    {
+      "japanese": "いつもこの場所で 探していたね",
+      "furiganaMap": {
+        "5": "ば",
+        "6": "しょ",
+        "9": "さが"
+      },
+      "chinese": "一直都在这个地方寻找着呢",
+      "isBreak": false
+    },
+    {
+      "japanese": "何気なく 過ぎゆく時間の",
+      "furiganaMap": {
+        "0": "なに",
+        "1": "げ",
+        "5": "す",
+        "9": "じ",
+        "10": "かん"
+      },
+      "chinese": "那些不经意间流逝的时间",
+      "isBreak": false
+    },
+    {
+      "japanese": "その意味を知ってる",
+      "furiganaMap": {
+        "2": "い",
+        "3": "み",
+        "5": "し"
+      },
+      "chinese": "其中的意义我都明白",
+      "isBreak": false
+    },
+    {
+      "japanese": "たとえどんなに",
+      "furiganaMap": {},
+      "chinese": "无论变成怎样",
+      "isBreak": false
+    },
+    {
+      "japanese": "二人 離れてしまっても",
+      "furiganaMap": {
+        "0": "ふた",
+        "1": "り",
+        "3": "はな"
+      },
+      "chinese": "即使两人最终分离",
+      "isBreak": false
+    },
+    {
+      "japanese": "この空の観測者",
+      "furiganaMap": {
+        "2": "そら",
+        "4": "かん",
+        "5": "そく",
+        "6": "しゃ"
+      },
+      "chinese": "这片天空的观测者",
+      "isBreak": false
+    },
+    {
+      "japanese": "この空は明日の証明",
+      "furiganaMap": {
+        "2": "そら",
+        "4": "あ",
+        "5": "す",
+        "7": "しょう",
+        "8": "めい"
+      },
+      "chinese": "这片天空就是明天的证明",
+      "isBreak": true
+    },
+    {
+      "japanese": "たとえ僕らは",
+      "furiganaMap": {
+        "3": "ぼく"
+      },
+      "chinese": "即使我们",
+      "isBreak": false
+    },
+    {
+      "japanese": "遠く 離れてしまっても",
+      "furiganaMap": {
+        "0": "とお",
+        "3": "はな"
+      },
+      "chinese": "远远分离了也没关系",
+      "isBreak": false
+    },
+    {
+      "japanese": "いつもこの場所で繋がっている",
+      "furiganaMap": {
+        "5": "ば",
+        "6": "しょ",
+        "8": "つな"
+      },
+      "chinese": "也一直在这个地方彼此相连",
+      "isBreak": false
+    },
+    {
+      "japanese": "切なくてロマンチックだね",
+      "furiganaMap": {
+        "0": "せつ"
+      },
+      "chinese": "既让人伤感又很浪漫呢",
+      "isBreak": false
+    },
+    {
+      "japanese": "まだ知らない明日",
+      "furiganaMap": {
+        "2": "し",
+        "6": "あし",
+        "7": "た"
+      },
+      "chinese": "以及尚未知晓的明天",
+      "isBreak": false
+    },
+    {
+      "japanese": "いつか僕らが 未来 振り返る時には",
+      "furiganaMap": {
+        "3": "ぼく",
+        "7": "み",
+        "8": "らい",
+        "10": "ふ",
+        "12": "かえ",
+        "14": "とき"
+      },
+      "chinese": "总有一天当我们回首未来之时",
+      "isBreak": false
+    },
+    {
+      "japanese": "いつもこの場所で キミが笑って",
+      "furiganaMap": {
+        "5": "ば",
+        "6": "しょ",
+        "12": "わら"
+      },
+      "chinese": "你会一直在这个地方微笑着",
+      "isBreak": false
+    },
+    {
+      "japanese": "重ね合った みんなの想いが",
+      "furiganaMap": {
+        "0": "かさ",
+        "2": "あ",
+        "10": "おも"
+      },
+      "chinese": "大家彼此重叠交汇的心意",
+      "isBreak": false
+    },
+    {
+      "japanese": "世界線を創る",
+      "furiganaMap": {
+        "0": "せ",
+        "1": "かい",
+        "2": "せん",
+        "4": "つく"
+      },
+      "chinese": "将会创造出世界线",
+      "isBreak": false
+    },
+    {
+      "japanese": "どんな雨にも",
+      "furiganaMap": {
+        "3": "あめ"
+      },
+      "chinese": "无论怎样的大雨",
+      "isBreak": false
+    },
+    {
+      "japanese": "負けぬ信じ合える気持ち",
+      "furiganaMap": {
+        "0": "ま",
+        "3": "しん",
+        "5": "あ",
+        "8": "き",
+        "9": "も"
+      },
+      "chinese": "都无法击败彼此信任的心情",
+      "isBreak": false
+    },
+    {
+      "japanese": "この空の観測者",
+      "furiganaMap": {
+        "2": "そら",
+        "4": "かん",
+        "5": "そく",
+        "6": "しゃ"
+      },
+      "chinese": "这片天空的观测者",
+      "isBreak": false
+    },
+    {
+      "japanese": "この空は明日の証明",
+      "furiganaMap": {
+        "2": "そら",
+        "4": "あ",
+        "5": "す",
+        "7": "しょう",
+        "8": "めい"
+      },
+      "chinese": "这片天空就是明天的证明",
+      "isBreak": false
+    }
+  ]
+}
