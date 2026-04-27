@@ -24,6 +24,11 @@ const fileInput = ref<HTMLInputElement | null>(null)
 const showBackToTop = ref(false)
 const showGoToBottom = ref(false)
 
+const waitForNextFrame = () =>
+  new Promise<void>((resolve) => {
+    requestAnimationFrame(() => resolve())
+  })
+
 const handleScroll = () => {
   showBackToTop.value = window.scrollY > 240
   const distanceToBottom =
@@ -79,14 +84,21 @@ const importLyrics = (event: Event) => {
 
 // 导出预览为图片功能
 const exportPreviewAsImage = async () => {
-  const previewContainer = document.querySelector('.preview-container')
-  if (!previewContainer) return
+  const previewStage = document.querySelector('.preview-stage')
+  if (!(previewStage instanceof HTMLElement)) return
 
+  previewStage.classList.add('preview-stage--exporting')
   try {
-    const canvas = await html2canvas(previewContainer as HTMLElement, {
-      backgroundColor: '#ffffff',
-      scale: 2, // 提高图片质量
+    await waitForNextFrame()
+
+    const { width, height } = previewStage.getBoundingClientRect()
+    const canvas = await html2canvas(previewStage, {
+      backgroundColor: null,
+      scale: Math.max(window.devicePixelRatio, 2),
+      width: Math.ceil(width),
+      height: Math.ceil(height),
       logging: false,
+      useCORS: true,
     })
 
     // 将canvas转换为图片并下载
@@ -100,6 +112,8 @@ const exportPreviewAsImage = async () => {
   } catch (error) {
     console.error('导出图片失败:', error)
     alert('导出图片失败，请重试')
+  } finally {
+    previewStage.classList.remove('preview-stage--exporting')
   }
 }
 

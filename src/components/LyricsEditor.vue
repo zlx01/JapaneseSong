@@ -71,7 +71,7 @@
                   @click="toggleBreak(index)"
                   class="icon-btn"
                   :class="{ active: line.isBreak }"
-                  title="分段"
+                  title="在此处分段"
                 >
                   <SplitSquareHorizontal class="h-4 w-4" />
                 </button>
@@ -103,12 +103,21 @@
 
         <div class="preview-line inline-preview">
           <div class="japanese-text" :class="{ 'song-name': index === 0 }">
-            <ruby v-for="(char, charIndex) in line.japanese" :key="charIndex">
-              {{ char
-              }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
-            </ruby>
+            <template v-for="(char, charIndex) in line.japanese" :key="charIndex">
+              <ruby v-if="previewPreferences.showFurigana">
+                {{ char
+                }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
+              </ruby>
+              <span v-else>{{ char }}</span>
+            </template>
           </div>
-          <div class="chinese-text" :class="{ 'song-name': index === 0 }">{{ line.chinese }}</div>
+          <div
+            v-if="previewPreferences.showChinese"
+            class="chinese-text"
+            :class="{ 'song-name': index === 0 }"
+          >
+            {{ line.chinese }}
+          </div>
           <div v-if="line.isBreak" class="preview-break"></div>
         </div>
       </div>
@@ -128,14 +137,61 @@
     </div>
 
     <div class="preview-container" v-show="!isEditMode">
-      <div v-for="(line, index) in lyrics" :key="'preview-' + index" class="preview-line">
-        <div class="japanese-text" :class="{ 'song-name': index === 0 }">
-          <ruby v-for="(char, charIndex) in line.japanese" :key="charIndex">
-            {{ char }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
-          </ruby>
+      <div class="preview-toolbar preview-mode-toolbar">
+        <div class="preview-toolbar-copy">
+          <span class="preview-toolbar-label">预览显示</span>
+          <span class="preview-toolbar-hint">可单独隐藏假名或中文</span>
         </div>
-        <div class="chinese-text" :class="{ 'song-name': index === 0 }">{{ line.chinese }}</div>
-        <div v-if="line.isBreak" class="preview-break"></div>
+        <div class="preview-toggle-group" role="group" aria-label="预览显示选项">
+          <button
+            type="button"
+            class="preview-toggle"
+            :class="{ active: previewPreferences.showFurigana }"
+            :aria-pressed="previewPreferences.showFurigana"
+            title="切换假名显示"
+            @click="togglePreviewPreference('showFurigana')"
+          >
+            <span class="preview-toggle-text">假名</span>
+            <span class="preview-toggle-state">{{
+              previewPreferences.showFurigana ? '开' : '关'
+            }}</span>
+          </button>
+          <button
+            type="button"
+            class="preview-toggle"
+            :class="{ active: previewPreferences.showChinese }"
+            :aria-pressed="previewPreferences.showChinese"
+            title="切换中文显示"
+            @click="togglePreviewPreference('showChinese')"
+          >
+            <span class="preview-toggle-text">中文</span>
+            <span class="preview-toggle-state">{{
+              previewPreferences.showChinese ? '开' : '关'
+            }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="preview-stage">
+        <div v-for="(line, index) in lyrics" :key="'preview-' + index" class="preview-line">
+          <div class="japanese-text" :class="{ 'song-name': index === 0 }">
+            <template v-for="(char, charIndex) in line.japanese" :key="charIndex">
+              <ruby v-if="previewPreferences.showFurigana">
+                {{ char
+                }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
+              </ruby>
+              <span v-else>{{ char }}</span>
+            </template>
+          </div>
+          <div
+            v-if="previewPreferences.showChinese"
+            class="chinese-text"
+            :class="{ 'song-name': index === 0 }"
+          >
+            {{ line.chinese }}
+          </div>
+          <div v-if="line.isBreak" class="preview-break"></div>
+        </div>
       </div>
       <!-- <img class="poster" src="@/assets/poster/ichigo_hakusho.gif" /> -->
     </div>
@@ -143,7 +199,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { Pencil, Copy, Trash2, Plus, SplitSquareHorizontal } from 'lucide-vue-next'
 
 defineProps<{
@@ -174,6 +230,42 @@ const editInputs: (HTMLInputElement | null)[] = []
 const draggedIndex = ref<number>(-1)
 
 const STORAGE_KEY = 'japanese-lyrics-editor-state'
+const PREVIEW_PREFERENCES_STORAGE_KEY = 'japanese-lyrics-preview-preferences'
+const previewPreferences = ref({
+  showChinese: true,
+  showFurigana: true,
+})
+
+const togglePreviewPreference = (key: 'showChinese' | 'showFurigana') => {
+  previewPreferences.value[key] = !previewPreferences.value[key]
+}
+
+const savePreviewPreferences = () => {
+  localStorage.setItem(PREVIEW_PREFERENCES_STORAGE_KEY, JSON.stringify(previewPreferences.value))
+}
+
+const restorePreviewPreferences = () => {
+  const savedPreferences = localStorage.getItem(PREVIEW_PREFERENCES_STORAGE_KEY)
+  if (!savedPreferences) return
+
+  try {
+    const parsedPreferences = JSON.parse(savedPreferences) as Partial<
+      typeof previewPreferences.value
+    >
+    previewPreferences.value = {
+      showChinese: parsedPreferences.showChinese ?? true,
+      showFurigana: parsedPreferences.showFurigana ?? true,
+    }
+  } catch (error) {
+    console.error('Failed to restore preview preferences:', error)
+  }
+}
+
+watch(previewPreferences, savePreviewPreferences, { deep: true })
+
+onMounted(() => {
+  restorePreviewPreferences()
+})
 
 const addNewLine = () => {
   if (newLine.value.trim()) {
@@ -590,6 +682,115 @@ defineExpose({
   gap: 0.5rem;
 }
 
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(212, 203, 191, 0.9);
+  border-radius: 1rem;
+  background: rgba(255, 253, 249, 0.82);
+  box-shadow: 0 10px 26px rgba(71, 52, 33, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+.preview-mode-toolbar {
+  margin-bottom: 1.5rem;
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+}
+
+.preview-toolbar-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.preview-toolbar-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #3a3028;
+}
+
+.preview-toolbar-hint {
+  font-size: 0.78rem;
+  color: #7b6d5c;
+}
+
+.preview-toggle-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.preview-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 7rem;
+  padding: 0.5rem 0.55rem 0.5rem 0.85rem;
+  border: 1px solid rgba(212, 203, 191, 0.95);
+  border-radius: 999px;
+  background: rgba(255, 253, 249, 0.92);
+  color: #6b5c4d;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.15s ease;
+}
+
+.preview-toggle-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.preview-toggle-state {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.9rem;
+  height: 1.5rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: #ece4d7;
+  color: #7b6d5c;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.preview-toggle:hover {
+  transform: translateY(-1px);
+  background: #f6f0e7;
+  border-color: rgba(139, 107, 74, 0.35);
+  color: #3a3028;
+  box-shadow: 0 8px 20px rgba(71, 52, 33, 0.08);
+}
+
+.preview-toggle:focus-visible {
+  outline: none;
+  border-color: #8b6b4a;
+  box-shadow: 0 0 0 3px rgba(139, 107, 74, 0.18);
+}
+
+.preview-toggle.active {
+  background: rgba(139, 107, 74, 0.12);
+  border-color: rgba(139, 107, 74, 0.55);
+  color: #8b6b4a;
+}
+
+.preview-toggle.active .preview-toggle-state {
+  background: #8b6b4a;
+  color: #fffdf9;
+}
+
 h2 {
   font-size: 1.25rem;
   font-weight: 600;
@@ -610,7 +811,41 @@ h2 {
 .preview-only .preview-container {
   max-width: 800px;
   margin: 0 auto;
+}
+
+.preview-stage {
+  padding: 1.5rem 1.75rem;
+  border-radius: 1.5rem;
   background: linear-gradient(180deg, #f5f0e8 0%, #ebe4d6 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  overflow: hidden;
+}
+
+.preview-stage.preview-stage--exporting {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.preview-stage.preview-stage--exporting .preview-line:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .preview-toolbar {
+    align-items: stretch;
+  }
+
+  .preview-mode-toolbar {
+    top: 0.75rem;
+  }
+
+  .preview-toggle-group {
+    width: 100%;
+  }
+
+  .preview-toggle {
+    flex: 1 1 9rem;
+  }
 }
 
 .lyrics-line {
