@@ -201,7 +201,7 @@ onUnmounted(() => {
 
 .example h1 {
   text-align: center;
-  color: #2c2418;
+  color: var(--text-primary);
   margin: 0;
   font-family: 'Noto Serif JP', 'Noto Serif', serif;
 }
@@ -210,10 +210,10 @@ onUnmounted(() => {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
-  border: 1px solid #d4cbbf;
+  border: 1px solid var(--border-strong);
   border-radius: 0.375rem;
   background: transparent;
-  color: #6b5c4d;
+  color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.875rem;
   cursor: pointer;
@@ -221,44 +221,44 @@ onUnmounted(() => {
 }
 
 .back-btn:hover {
-  background: #f0ebe3;
-  color: #3a3028;
+  background: var(--surface-soft);
+  color: var(--text-primary);
 }
 
 .copy-link-btn {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
-  border: 1px solid #d4cbbf;
+  border: 1px solid var(--border-strong);
   border-radius: 0.375rem;
   background: transparent;
-  color: #6b5c4d;
+  color: var(--text-secondary);
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .copy-link-btn:hover {
-  background: #f0ebe3;
-  color: #3a3028;
+  background: var(--surface-soft);
+  color: var(--text-primary);
 }
 
 .edit-song-btn {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
-  border: 1px solid rgba(139, 107, 74, 0.35);
+  border: 1px solid var(--border-accent);
   border-radius: 0.375rem;
-  background: rgba(139, 107, 74, 0.08);
-  color: #7a5c3e;
+  background: var(--surface-accent);
+  color: var(--accent);
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .edit-song-btn:hover {
-  background: rgba(139, 107, 74, 0.15);
-  color: #5f472f;
+  background: var(--surface-accent-strong);
+  color: var(--accent-hover);
 }
 
 .content {
@@ -268,9 +268,10 @@ onUnmounted(() => {
 }
 
 .song-list {
-  border: 1px solid #e0d8cc;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  background: #fffdf9;
+  background: var(--surface);
+  box-shadow: var(--panel-shadow);
   padding: 0.75rem;
   display: flex;
   flex-direction: column;
@@ -280,38 +281,39 @@ onUnmounted(() => {
 
 .song-list-title {
   font-weight: 600;
-  color: #2c2418;
+  color: var(--text-primary);
   padding: 0.25rem 0.5rem;
 }
 
 .song-link {
   text-decoration: none;
-  color: #5a4f42;
+  color: var(--text-secondary);
   padding: 0.5rem;
   border-radius: 0.375rem;
   border: 1px solid transparent;
 }
 
 .song-link:hover {
-  background: #f5f0e8;
+  background: var(--surface-soft);
 }
 
 .song-link.active {
-  border-color: #d4cbbf;
-  background: #f0ebe3;
-  color: #2c2418;
+  border-color: var(--border-strong);
+  background: var(--surface-soft);
+  color: var(--text-primary);
 }
 
 .preview-panel {
-  border: 1px solid #e0d8cc;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  background: #fffdf9;
+  background: var(--surface);
+  box-shadow: var(--panel-shadow);
   padding: 1rem;
 }
 
 .song-title {
   margin: 0 0 1rem;
-  color: #2c2418;
+  color: var(--text-primary);
   text-align: center;
 }
 
@@ -320,7 +322,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b5c4d;
+  color: var(--text-secondary);
 }
 
 .back-to-top-btn {
@@ -333,12 +335,12 @@ onUnmounted(() => {
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid rgba(139, 107, 74, 0.35);
+  border: 1px solid var(--floating-border);
   border-radius: 9999px;
-  background: rgba(139, 107, 74, 0.92);
-  color: #fff;
+  background: var(--floating-bg);
+  color: var(--text-contrast);
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--floating-shadow);
   transition: all 0.2s ease;
 }
 
@@ -352,46 +354,46 @@ onUnmounted(() => {
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid rgba(139, 107, 74, 0.35);
+  border: 1px solid var(--floating-border);
   border-radius: 9999px;
-  background: rgba(139, 107, 74, 0.92);
-  color: #fff;
+  background: var(--floating-bg);
+  color: var(--text-contrast);
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--floating-shadow);
   transition: all 0.2s ease;
 }
 
 .go-to-bottom-btn:hover {
   transform: translateY(-2px);
-  background: #7a5c3e;
+  background: var(--floating-bg-hover);
 }
 
 .back-to-top-btn:hover {
   transform: translateY(-2px);
-  background: #7a5c3e;
+  background: var(--floating-bg-hover);
 }
 
 .copy-toast {
   position: fixed;
-  top: 1.25rem;
+  top: 5.4rem;
   right: 1.25rem;
   z-index: 60;
   max-width: min(70vw, 420px);
   padding: 0.625rem 0.875rem;
-  border: 1px solid rgba(35, 114, 72, 0.28);
+  border: 1px solid var(--success-border);
   border-radius: 0.5rem;
-  background: #f0faf4;
-  color: #1f5f3d;
+  background: var(--success-bg);
+  color: var(--success-text);
   font-size: 0.875rem;
   line-height: 1.35;
-  box-shadow: 0 8px 18px rgba(31, 95, 61, 0.14);
+  box-shadow: var(--success-shadow);
 }
 
 .copy-toast.is-error {
-  border-color: rgba(185, 63, 63, 0.28);
-  background: #fff5f5;
-  color: #9f2f2f;
-  box-shadow: 0 8px 18px rgba(159, 47, 47, 0.14);
+  border-color: var(--error-border);
+  background: var(--error-bg);
+  color: var(--error-text);
+  box-shadow: var(--error-shadow);
 }
 
 @media (max-width: 768px) {
@@ -406,7 +408,7 @@ onUnmounted(() => {
   }
 
   .copy-toast {
-    top: 0.75rem;
+    top: 4.85rem;
     right: 0.75rem;
     max-width: calc(100vw - 1.5rem);
   }

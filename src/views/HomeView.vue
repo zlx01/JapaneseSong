@@ -227,7 +227,7 @@ window.addEventListener('beforeunload', () => {
 
 h1 {
   text-align: center;
-  color: #2c2418;
+  color: var(--text-primary);
   margin: 0;
   font-family: 'Noto Serif JP', 'Noto Serif', serif;
 }
@@ -239,27 +239,27 @@ h1 {
   width: 2rem;
   height: 2rem;
   padding: 0;
-  border: 1px solid #d4cbbf;
+  border: 1px solid var(--border-strong);
   border-radius: 0.375rem;
   background: transparent;
-  color: #6b5c4d;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .icon-btn:hover {
-  background: #f0ebe3;
-  color: #3a3028;
+  background: var(--surface-soft);
+  color: var(--text-primary);
 }
 
 .preview-btn {
-  color: #8b6b4a;
-  border-color: rgba(139, 107, 74, 0.3);
+  color: var(--accent);
+  border-color: var(--border-accent);
 }
 
 .preview-btn:hover {
-  background: rgba(139, 107, 74, 0.1);
-  border-color: rgba(139, 107, 74, 0.4);
+  background: var(--accent-soft);
+  border-color: var(--border-accent-strong);
 }
 
 .hidden {
@@ -276,18 +276,18 @@ h1 {
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid rgba(139, 107, 74, 0.35);
+  border: 1px solid var(--floating-border);
   border-radius: 9999px;
-  background: rgba(139, 107, 74, 0.92);
-  color: #fff;
+  background: var(--floating-bg);
+  color: var(--text-contrast);
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--floating-shadow);
   transition: all 0.2s ease;
 }
 
 .back-to-top-btn:hover {
   transform: translateY(-2px);
-  background: #7a5c3e;
+  background: var(--floating-bg-hover);
 }
 
 .go-to-bottom-btn {
@@ -300,18 +300,18 @@ h1 {
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid rgba(139, 107, 74, 0.35);
+  border: 1px solid var(--floating-border);
   border-radius: 9999px;
-  background: rgba(139, 107, 74, 0.92);
-  color: #fff;
+  background: var(--floating-bg);
+  color: var(--text-contrast);
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--floating-shadow);
   transition: all 0.2s ease;
 }
 
 .go-to-bottom-btn:hover {
   transform: translateY(-2px);
-  background: #7a5c3e;
+  background: var(--floating-bg-hover);
 }
 
 @media (max-width: 768px) {
