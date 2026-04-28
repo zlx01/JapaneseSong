@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
+import MobileHamburgerButton from '@/components/ui/MobileHamburgerButton.vue'
 import {
   Eye,
   Edit2,
@@ -23,6 +24,26 @@ let autoSaveTimer: number | null = null
 const fileInput = ref<HTMLInputElement | null>(null)
 const showBackToTop = ref(false)
 const showGoToBottom = ref(false)
+const isMobileViewport = ref(false)
+const showControlsPanel = ref(false)
+let mobileQuery: MediaQueryList | null = null
+
+const syncMobileState = () => {
+  isMobileViewport.value = mobileQuery?.matches ?? false
+  if (!isMobileViewport.value) {
+    showControlsPanel.value = false
+  }
+}
+
+const toggleControlsPanel = () => {
+  showControlsPanel.value = !showControlsPanel.value
+}
+
+const closeControlsPanel = () => {
+  if (isMobileViewport.value) {
+    showControlsPanel.value = false
+  }
+}
 
 const waitForNextFrame = () =>
   new Promise<void>((resolve) => {
@@ -61,11 +82,13 @@ const stopAutoSave = () => {
 
 const togglePreview = () => {
   isEditMode.value = !isEditMode.value
+  closeControlsPanel()
 }
 
 // 导出歌词功能
 const exportLyrics = () => {
   editorRef.value?.exportLyrics()
+  closeControlsPanel()
 }
 
 const resetLyrics = () => {
@@ -75,11 +98,17 @@ const resetLyrics = () => {
   if (!confirmed) return
 
   editorRef.value.resetLyrics()
+  closeControlsPanel()
 }
 
 // 导入歌词功能
 const importLyrics = (event: Event) => {
   editorRef.value?.importLyrics(event)
+}
+
+const triggerImportLyrics = () => {
+  fileInput.value?.click()
+  closeControlsPanel()
 }
 
 // 导出预览为图片功能
@@ -114,6 +143,7 @@ const exportPreviewAsImage = async () => {
     alert('导出图片失败，请重试')
   } finally {
     previewStage.classList.remove('preview-stage--exporting')
+    closeControlsPanel()
   }
 }
 
@@ -121,6 +151,7 @@ const exportPreviewAsImage = async () => {
 const openExample = () => {
   const route = router.resolve({ name: 'example' })
   window.open(route.href, '_blank')
+  closeControlsPanel()
 }
 
 // 监听组件挂载
@@ -128,6 +159,9 @@ onMounted(() => {
   editorRef.value?.restoreFromLocalStorage()
   startAutoSave()
   handleScroll()
+  mobileQuery = window.matchMedia('(max-width: 768px)')
+  syncMobileState()
+  mobileQuery.addEventListener('change', syncMobileState)
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
@@ -136,6 +170,7 @@ onUnmounted(() => {
   stopAutoSave()
   editorRef.value?.saveToLocalStorage() // 卸载前保存一次
   window.removeEventListener('scroll', handleScroll)
+  mobileQuery?.removeEventListener('change', syncMobileState)
 })
 
 // 监听页面关闭
@@ -148,36 +183,51 @@ window.addEventListener('beforeunload', () => {
   <div class="home">
     <div class="title-container">
       <h1>日语歌词编辑器</h1>
-      <div class="controls-container">
-        <button
-          @click="togglePreview"
-          class="icon-btn preview-btn"
-          :title="isEditMode ? '切换到预览模式' : '切换到编辑模式'"
+      <div class="controls-shell">
+        <MobileHamburgerButton
+          v-if="isMobileViewport"
+          class="mobile-toggle"
+          :active="showControlsPanel"
+          controls="home-controls-panel"
+          open-label="展开操作菜单"
+          close-label="收起操作菜单"
+          @click="toggleControlsPanel"
+        />
+        <div
+          id="home-controls-panel"
+          class="controls-container"
+          :class="{ 'is-open': !isMobileViewport || showControlsPanel }"
         >
-          <Edit2 v-if="isEditMode" class="h-4 w-4" />
-          <Eye v-else class="h-4 w-4" />
-        </button>
-        <button v-if="isEditMode" @click="resetLyrics" class="icon-btn" title="重置歌词">
-          <RotateCcw class="h-4 w-4" />
-        </button>
-        <button @click="exportLyrics" class="icon-btn" title="导出歌词">
-          <Download class="h-4 w-4" />
-        </button>
-        <button @click="fileInput?.click()" class="icon-btn" title="导入歌词">
-          <Upload class="h-4 w-4" />
-        </button>
-        <button
-          v-if="!isEditMode"
-          @click="exportPreviewAsImage"
-          class="icon-btn"
-          title="保存预览为图片"
-        >
-          <Camera class="h-4 w-4" />
-        </button>
-        <button @click="openExample" class="icon-btn" title="查看示例">
-          <BookOpen class="h-4 w-4" />
-        </button>
-        <input ref="fileInput" type="file" accept=".json" class="hidden" @change="importLyrics" />
+          <button
+            @click="togglePreview"
+            class="icon-btn preview-btn"
+            :title="isEditMode ? '切换到预览模式' : '切换到编辑模式'"
+          >
+            <Edit2 v-if="isEditMode" class="h-4 w-4" />
+            <Eye v-else class="h-4 w-4" />
+          </button>
+          <button v-if="isEditMode" @click="resetLyrics" class="icon-btn" title="重置歌词">
+            <RotateCcw class="h-4 w-4" />
+          </button>
+          <button @click="exportLyrics" class="icon-btn" title="导出歌词">
+            <Download class="h-4 w-4" />
+          </button>
+          <button @click="triggerImportLyrics" class="icon-btn" title="导入歌词">
+            <Upload class="h-4 w-4" />
+          </button>
+          <button
+            v-if="!isEditMode"
+            @click="exportPreviewAsImage"
+            class="icon-btn"
+            title="保存预览为图片"
+          >
+            <Camera class="h-4 w-4" />
+          </button>
+          <button @click="openExample" class="icon-btn" title="查看示例">
+            <BookOpen class="h-4 w-4" />
+          </button>
+          <input ref="fileInput" type="file" accept=".json" class="hidden" @change="importLyrics" />
+        </div>
       </div>
     </div>
     <LyricsEditor ref="editorRef" :isEditMode="isEditMode" />
@@ -208,7 +258,7 @@ window.addEventListener('beforeunload', () => {
 .home {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
 .title-container {
@@ -216,19 +266,30 @@ window.addEventListener('beforeunload', () => {
   align-items: center;
   gap: 0.75rem;
   justify-content: center;
+  flex-wrap: wrap;
   margin-bottom: 2rem;
 }
 
 .controls-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.controls-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 h1 {
   text-align: center;
   color: var(--text-primary);
   margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
   font-family: 'Noto Serif JP', 'Noto Serif', serif;
 }
 
@@ -315,6 +376,37 @@ h1 {
 }
 
 @media (max-width: 768px) {
+  .title-container {
+    margin-bottom: 1.25rem;
+    gap: 0.9rem;
+  }
+
+  .controls-shell {
+    width: 100%;
+    align-items: flex-start;
+    margin-top: -3.4rem;
+  }
+
+  .controls-container {
+    display: none;
+    align-self: stretch;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 1rem;
+    background: var(--toolbar-bg);
+    box-shadow: var(--toolbar-shadow);
+  }
+
+  .controls-container.is-open {
+    display: flex;
+  }
+
+  .icon-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
   .back-to-top-btn {
     right: 1rem;
     bottom: 1rem;
@@ -323,6 +415,20 @@ h1 {
   .go-to-bottom-btn {
     left: 1rem;
     bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    padding: 0.9rem;
+  }
+
+  .title-container {
+    align-items: stretch;
+  }
+
+  h1 {
+    width: 100%;
   }
 }
 

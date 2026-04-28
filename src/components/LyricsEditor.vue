@@ -142,7 +142,22 @@
           <span class="preview-toolbar-label">预览显示</span>
           <span class="preview-toolbar-hint">可单独隐藏假名或中文</span>
         </div>
-        <div class="preview-toggle-group" role="group" aria-label="预览显示选项">
+        <MobileHamburgerButton
+          v-if="isMobileViewport"
+          class="preview-mobile-toggle"
+          :active="showPreviewOptions"
+          controls="preview-toggle-panel"
+          open-label="展开预览设置"
+          close-label="收起预览设置"
+          @click="togglePreviewOptions"
+        />
+        <div
+          id="preview-toggle-panel"
+          class="preview-toggle-group"
+          :class="{ 'is-open': !isMobileViewport || showPreviewOptions }"
+          role="group"
+          aria-label="预览显示选项"
+        >
           <button
             type="button"
             class="preview-toggle"
@@ -199,7 +214,8 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import MobileHamburgerButton from '@/components/ui/MobileHamburgerButton.vue'
 import { Pencil, Copy, Trash2, Plus, SplitSquareHorizontal } from 'lucide-vue-next'
 
 defineProps<{
@@ -235,6 +251,20 @@ const previewPreferences = ref({
   showChinese: true,
   showFurigana: true,
 })
+const isMobileViewport = ref(false)
+const showPreviewOptions = ref(false)
+let mobileQuery: MediaQueryList | null = null
+
+const syncMobileState = () => {
+  isMobileViewport.value = mobileQuery?.matches ?? false
+  if (!isMobileViewport.value) {
+    showPreviewOptions.value = false
+  }
+}
+
+const togglePreviewOptions = () => {
+  showPreviewOptions.value = !showPreviewOptions.value
+}
 
 const togglePreviewPreference = (key: 'showChinese' | 'showFurigana') => {
   previewPreferences.value[key] = !previewPreferences.value[key]
@@ -265,6 +295,13 @@ watch(previewPreferences, savePreviewPreferences, { deep: true })
 
 onMounted(() => {
   restorePreviewPreferences()
+  mobileQuery = window.matchMedia('(max-width: 768px)')
+  syncMobileState()
+  mobileQuery.addEventListener('change', syncMobileState)
+})
+
+onUnmounted(() => {
+  mobileQuery?.removeEventListener('change', syncMobileState)
 })
 
 const addNewLine = () => {
@@ -652,8 +689,9 @@ defineExpose({
 <style scoped>
 .lyrics-editor {
   display: flex;
-  gap: 2rem;
-  padding: 2rem;
+  align-items: flex-start;
+  gap: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
 .lyrics-editor.preview-only {
@@ -663,6 +701,7 @@ defineExpose({
 .editor-container {
   flex: 1;
   max-width: 600px;
+  min-width: 0;
 }
 
 .lyrics-editor:not(.preview-only) .editor-container {
@@ -698,9 +737,6 @@ defineExpose({
 
 .preview-mode-toolbar {
   margin-bottom: 1.5rem;
-  position: sticky;
-  top: 1rem;
-  z-index: 10;
 }
 
 .preview-toolbar-copy {
@@ -733,12 +769,14 @@ defineExpose({
   align-items: center;
   justify-content: space-between;
   min-width: 7rem;
+  min-height: 2.5rem;
   padding: 0.5rem 0.55rem 0.5rem 0.85rem;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
   background: var(--surface-strong);
   color: var(--text-secondary);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition:
     transform 0.15s ease,
     border-color 0.15s ease,
@@ -766,14 +804,6 @@ defineExpose({
   font-weight: 700;
 }
 
-.preview-toggle:hover {
-  transform: translateY(-1px);
-  background: var(--surface-soft);
-  border-color: var(--border-accent);
-  color: var(--text-primary);
-  box-shadow: var(--panel-shadow);
-}
-
 .preview-toggle:focus-visible {
   outline: none;
   border-color: var(--accent);
@@ -791,6 +821,16 @@ defineExpose({
   color: var(--text-contrast);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .preview-toggle:hover {
+    transform: translateY(-1px);
+    background: var(--surface-soft);
+    border-color: var(--border-accent);
+    color: var(--text-primary);
+    box-shadow: var(--panel-shadow);
+  }
+}
+
 h2 {
   font-size: 1.25rem;
   font-weight: 600;
@@ -804,6 +844,8 @@ h2 {
 
 .preview-container {
   flex: 1;
+  min-width: 0;
+  width: 100%;
   max-width: 600px;
   text-align: center;
 }
@@ -836,15 +878,21 @@ h2 {
 
 @media (max-width: 768px) {
   .preview-toolbar {
-    align-items: stretch;
+    align-items: flex-start;
   }
 
-  .preview-mode-toolbar {
-    top: 0.75rem;
+  .preview-mobile-toggle {
+    margin-left: auto;
   }
 
   .preview-toggle-group {
+    display: none;
+    align-self: stretch;
     width: 100%;
+  }
+
+  .preview-toggle-group.is-open {
+    display: flex;
   }
 
   .preview-toggle {
@@ -918,6 +966,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .japanese-text {
@@ -931,6 +980,7 @@ h2 {
   /* font-family: 'Noto Serif JP', 'Noto Serif'; */
   margin-top: 20px;
   color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
 
 .japanese-text:focus-within {
@@ -939,6 +989,7 @@ h2 {
 
 .line-controls {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
   vertical-align: middle;
   margin-left: 0.5rem;
@@ -996,6 +1047,7 @@ rt {
 }
 
 .chinese-input {
+  width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
@@ -1038,6 +1090,7 @@ rt {
 
 .add-line {
   display: flex;
+  align-items: stretch;
   gap: 0.5rem;
   margin-top: 1rem;
 }
@@ -1125,6 +1178,7 @@ rt {
   color: var(--text-secondary);
   font-size: 1rem;
   /* font-family: 'Noto Serif SC', 'Noto Serif'; */
+  overflow-wrap: anywhere;
 }
 
 .chinese-text.song-name {
@@ -1175,5 +1229,99 @@ rt {
 .preview-break {
   height: 0.5rem;
   margin: 0.5rem 0;
+}
+
+@media (max-width: 1024px) {
+  .lyrics-editor:not(.preview-only) {
+    flex-direction: column;
+  }
+
+  .lyrics-editor:not(.preview-only) .editor-container,
+  .lyrics-editor:not(.preview-only) .preview-container {
+    max-width: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .lyrics-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+  }
+
+  .inline-preview {
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .lyrics-editor {
+    padding: 0.75rem 0;
+  }
+
+  .lyrics-line {
+    border-radius: 0.85rem;
+  }
+
+  .drag-handle {
+    width: 2.25rem;
+    padding: 0.85rem 0;
+  }
+
+  .drag-hover-tip {
+    display: none;
+  }
+
+  .lyrics-content {
+    padding: 0.85rem;
+  }
+
+  .japanese-text,
+  .chinese-input,
+  .edit-input,
+  .new-line-input {
+    font-size: 16px;
+  }
+
+  .add-line {
+    flex-direction: column;
+  }
+
+  .add-btn {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+
+  .preview-stage {
+    padding: 1.1rem 1rem;
+    border-radius: 1.1rem;
+  }
+
+  .preview-line .japanese-text {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lyrics-line {
+    flex-direction: column;
+  }
+
+  .drag-handle {
+    width: 100%;
+    min-height: 2.5rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .line-controls {
+    display: flex;
+    margin-left: 0;
+    margin-top: 0.65rem;
+  }
+
+  .preview-toggle {
+    min-width: 0;
+    width: 100%;
+  }
 }
 </style>

@@ -18,6 +18,8 @@ const theme = ref<ThemeMode>('light')
 const isDarkTheme = computed(() => theme.value === 'dark')
 const themeButtonLabel = computed(() => (isDarkTheme.value ? '切换到亮色模式' : '切换到暗色模式'))
 
+theme.value = resolveInitialTheme()
+
 const applyTheme = (value: ThemeMode) => {
   document.documentElement.dataset.theme = value
 }
@@ -27,17 +29,13 @@ const toggleTheme = () => {
 }
 
 onMounted(() => {
-  theme.value = resolveInitialTheme()
+  applyTheme(theme.value)
 })
 
-watch(
-  theme,
-  (value) => {
-    applyTheme(value)
-    window.localStorage.setItem(THEME_STORAGE_KEY, value)
-  },
-  { immediate: true },
-)
+watch(theme, (value) => {
+  applyTheme(value)
+  window.localStorage.setItem(THEME_STORAGE_KEY, value)
+})
 </script>
 
 <template>
@@ -66,11 +64,12 @@ watch(
 
 <style>
 .app-shell {
+  position: relative;
   min-height: 100vh;
 }
 
 .theme-toggle-anchor {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: clamp(0.8rem, 2vw, 1.8rem);
   z-index: 100;
@@ -88,8 +87,14 @@ watch(
   color: var(--theme-toggle-icon);
   cursor: pointer;
   pointer-events: auto;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
   transform-origin: top center;
   animation: theme-toggle-sway 6.8s ease-in-out infinite;
+}
+
+.theme-toggle:active {
+  background: transparent;
 }
 
 .theme-toggle:hover,

@@ -159,6 +159,22 @@ a {
     box-shadow 0.2s ease;
 }
 
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'],
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 a {
   color: inherit;
 }
