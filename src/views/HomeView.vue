@@ -20,6 +20,7 @@ const router = useRouter()
 
 const isEditMode = ref(true)
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
+const controlsShellRef = ref<HTMLElement | null>(null)
 let autoSaveTimer: number | null = null
 const fileInput = ref<HTMLInputElement | null>(null)
 const showBackToTop = ref(false)
@@ -43,6 +44,16 @@ const closeControlsPanel = () => {
   if (isMobileViewport.value) {
     showControlsPanel.value = false
   }
+}
+
+const handlePointerDownOutsideControls = (event: PointerEvent) => {
+  if (!isMobileViewport.value || !showControlsPanel.value) return
+
+  const target = event.target
+  if (!(target instanceof Node)) return
+  if (controlsShellRef.value?.contains(target)) return
+
+  closeControlsPanel()
 }
 
 const waitForNextFrame = () =>
@@ -162,6 +173,7 @@ onMounted(() => {
   mobileQuery = window.matchMedia('(max-width: 768px)')
   syncMobileState()
   mobileQuery.addEventListener('change', syncMobileState)
+  document.addEventListener('pointerdown', handlePointerDownOutsideControls)
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
@@ -169,6 +181,7 @@ onMounted(() => {
 onUnmounted(() => {
   stopAutoSave()
   editorRef.value?.saveToLocalStorage() // 卸载前保存一次
+  document.removeEventListener('pointerdown', handlePointerDownOutsideControls)
   window.removeEventListener('scroll', handleScroll)
   mobileQuery?.removeEventListener('change', syncMobileState)
 })
@@ -183,7 +196,7 @@ window.addEventListener('beforeunload', () => {
   <div class="home">
     <div class="title-container">
       <h1>日语歌词编辑器</h1>
-      <div class="controls-shell">
+      <div ref="controlsShellRef" class="controls-shell">
         <MobileHamburgerButton
           v-if="isMobileViewport"
           class="mobile-toggle"

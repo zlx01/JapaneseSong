@@ -9,6 +9,7 @@ import { ChevronDown, ChevronUp } from 'lucide-vue-next'
 const route = useRoute()
 const router = useRouter()
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
+const headerActionsShellRef = ref<HTMLElement | null>(null)
 const songs = getSongs()
 const copyStatus = ref('')
 const EDITOR_STORAGE_KEY = 'japanese-lyrics-editor-state'
@@ -35,6 +36,16 @@ const closeHeaderActions = () => {
   if (isMobileViewport.value) {
     showHeaderActions.value = false
   }
+}
+
+const handlePointerDownOutsideHeaderActions = (event: PointerEvent) => {
+  if (!isMobileViewport.value || !showHeaderActions.value) return
+
+  const target = event.target
+  if (!(target instanceof Node)) return
+  if (headerActionsShellRef.value?.contains(target)) return
+
+  closeHeaderActions()
 }
 
 const selectedSongId = computed(() => {
@@ -129,10 +140,12 @@ onMounted(() => {
   mobileQuery = window.matchMedia('(max-width: 768px)')
   syncMobileState()
   mobileQuery.addEventListener('change', syncMobileState)
+  document.addEventListener('pointerdown', handlePointerDownOutsideHeaderActions)
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
 onUnmounted(() => {
+  document.removeEventListener('pointerdown', handlePointerDownOutsideHeaderActions)
   window.removeEventListener('scroll', handleScroll)
   mobileQuery?.removeEventListener('change', syncMobileState)
   if (copyStatusTimer !== null) {
@@ -145,7 +158,7 @@ onUnmounted(() => {
   <div class="example">
     <div class="title-container">
       <!-- <h1>歌曲一览</h1> -->
-      <div class="header-actions-shell">
+      <div ref="headerActionsShellRef" class="header-actions-shell">
         <MobileHamburgerButton
           v-if="isMobileViewport"
           class="mobile-toggle"

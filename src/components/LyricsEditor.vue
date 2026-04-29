@@ -100,26 +100,6 @@
           </div>
           <div v-if="line.isBreak" class="break-line"></div>
         </div>
-
-        <div class="preview-line inline-preview">
-          <div class="japanese-text" :class="{ 'song-name': index === 0 }">
-            <template v-for="(char, charIndex) in line.japanese" :key="charIndex">
-              <ruby v-if="previewPreferences.showFurigana">
-                {{ char
-                }}<rt v-if="line.furiganaMap[charIndex]">{{ line.furiganaMap[charIndex] }}</rt>
-              </ruby>
-              <span v-else>{{ char }}</span>
-            </template>
-          </div>
-          <div
-            v-if="previewPreferences.showChinese"
-            class="chinese-text"
-            :class="{ 'song-name': index === 0 }"
-          >
-            {{ line.chinese }}
-          </div>
-          <div v-if="line.isBreak" class="preview-break"></div>
-        </div>
       </div>
 
       <div class="add-line">
@@ -137,7 +117,7 @@
     </div>
 
     <div class="preview-container" v-show="!isEditMode">
-      <div class="preview-toolbar preview-mode-toolbar">
+      <div ref="previewToolbarRef" class="preview-toolbar preview-mode-toolbar">
         <div class="preview-toolbar-copy">
           <span class="preview-toolbar-label">预览显示</span>
           <span class="preview-toolbar-hint">可单独隐藏假名或中文</span>
@@ -251,6 +231,7 @@ const previewPreferences = ref({
   showChinese: true,
   showFurigana: true,
 })
+const previewToolbarRef = ref<HTMLElement | null>(null)
 const isMobileViewport = ref(false)
 const showPreviewOptions = ref(false)
 let mobileQuery: MediaQueryList | null = null
@@ -264,6 +245,22 @@ const syncMobileState = () => {
 
 const togglePreviewOptions = () => {
   showPreviewOptions.value = !showPreviewOptions.value
+}
+
+const closePreviewOptions = () => {
+  if (isMobileViewport.value) {
+    showPreviewOptions.value = false
+  }
+}
+
+const handlePointerDownOutsidePreviewToolbar = (event: PointerEvent) => {
+  if (!isMobileViewport.value || !showPreviewOptions.value) return
+
+  const target = event.target
+  if (!(target instanceof Node)) return
+  if (previewToolbarRef.value?.contains(target)) return
+
+  closePreviewOptions()
 }
 
 const togglePreviewPreference = (key: 'showChinese' | 'showFurigana') => {
@@ -298,9 +295,11 @@ onMounted(() => {
   mobileQuery = window.matchMedia('(max-width: 768px)')
   syncMobileState()
   mobileQuery.addEventListener('change', syncMobileState)
+  document.addEventListener('pointerdown', handlePointerDownOutsidePreviewToolbar)
 })
 
 onUnmounted(() => {
+  document.removeEventListener('pointerdown', handlePointerDownOutsidePreviewToolbar)
   mobileQuery?.removeEventListener('change', syncMobileState)
 })
 
@@ -705,8 +704,9 @@ defineExpose({
 }
 
 .lyrics-editor:not(.preview-only) .editor-container {
-  max-width: none;
+  max-width: 736px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .editor-header {
@@ -914,10 +914,7 @@ h2 {
 }
 
 .lyrics-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 1.25rem;
-  align-items: start;
+  display: block;
 }
 
 .drag-handle {
@@ -1134,24 +1131,6 @@ rt {
 
 .preview-line {
   margin-bottom: 0;
-}
-
-.inline-preview {
-  padding: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  background: var(--surface-strong);
-  margin-bottom: 1rem;
-}
-
-.inline-preview .japanese-text {
-  margin-top: 20px;
-}
-
-.inline-preview .preview-break {
-  height: 1rem;
-  margin: 1rem 0;
-  border-bottom: 1px dashed var(--border-strong);
 }
 
 .preview-line:last-child {
