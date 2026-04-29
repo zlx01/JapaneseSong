@@ -194,8 +194,9 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import MobileHamburgerButton from '@/components/ui/MobileHamburgerButton.vue'
+import { useMobileActionPanel } from '@/composables/useMobileActionPanel'
 import { Pencil, Copy, Trash2, Plus, SplitSquareHorizontal } from 'lucide-vue-next'
 
 defineProps<{
@@ -231,37 +232,12 @@ const previewPreferences = ref({
   showChinese: true,
   showFurigana: true,
 })
-const previewToolbarRef = ref<HTMLElement | null>(null)
-const isMobileViewport = ref(false)
-const showPreviewOptions = ref(false)
-let mobileQuery: MediaQueryList | null = null
-
-const syncMobileState = () => {
-  isMobileViewport.value = mobileQuery?.matches ?? false
-  if (!isMobileViewport.value) {
-    showPreviewOptions.value = false
-  }
-}
-
-const togglePreviewOptions = () => {
-  showPreviewOptions.value = !showPreviewOptions.value
-}
-
-const closePreviewOptions = () => {
-  if (isMobileViewport.value) {
-    showPreviewOptions.value = false
-  }
-}
-
-const handlePointerDownOutsidePreviewToolbar = (event: PointerEvent) => {
-  if (!isMobileViewport.value || !showPreviewOptions.value) return
-
-  const target = event.target
-  if (!(target instanceof Node)) return
-  if (previewToolbarRef.value?.contains(target)) return
-
-  closePreviewOptions()
-}
+const {
+  shellRef: previewToolbarRef,
+  isMobileViewport,
+  isOpen: showPreviewOptions,
+  toggle: togglePreviewOptions,
+} = useMobileActionPanel()
 
 const togglePreviewPreference = (key: 'showChinese' | 'showFurigana') => {
   previewPreferences.value[key] = !previewPreferences.value[key]
@@ -292,15 +268,6 @@ watch(previewPreferences, savePreviewPreferences, { deep: true })
 
 onMounted(() => {
   restorePreviewPreferences()
-  mobileQuery = window.matchMedia('(max-width: 768px)')
-  syncMobileState()
-  mobileQuery.addEventListener('change', syncMobileState)
-  document.addEventListener('pointerdown', handlePointerDownOutsidePreviewToolbar)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('pointerdown', handlePointerDownOutsidePreviewToolbar)
-  mobileQuery?.removeEventListener('change', syncMobileState)
 })
 
 const addNewLine = () => {

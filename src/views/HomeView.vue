@@ -3,77 +3,32 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
 import MobileHamburgerButton from '@/components/ui/MobileHamburgerButton.vue'
-import {
-  Eye,
-  Edit2,
-  Upload,
-  Download,
-  RotateCcw,
-  Camera,
-  BookOpen,
-  ChevronUp,
-  ChevronDown,
-} from 'lucide-vue-next'
+import ScrollJumpButtons from '@/components/ui/ScrollJumpButtons.vue'
+import { useMobileActionPanel } from '@/composables/useMobileActionPanel'
+import { Eye, Edit2, Upload, Download, RotateCcw, Camera, BookOpen } from 'lucide-vue-next'
 import html2canvas from 'html2canvas'
 
 const router = useRouter()
 
 const isEditMode = ref(true)
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
-const controlsShellRef = ref<HTMLElement | null>(null)
 let autoSaveTimer: number | null = null
 const fileInput = ref<HTMLInputElement | null>(null)
-const showBackToTop = ref(false)
-const showGoToBottom = ref(false)
-const isMobileViewport = ref(false)
-const showControlsPanel = ref(false)
-let mobileQuery: MediaQueryList | null = null
-
-const syncMobileState = () => {
-  isMobileViewport.value = mobileQuery?.matches ?? false
-  if (!isMobileViewport.value) {
-    showControlsPanel.value = false
-  }
-}
-
-const toggleControlsPanel = () => {
-  showControlsPanel.value = !showControlsPanel.value
-}
-
-const closeControlsPanel = () => {
-  if (isMobileViewport.value) {
-    showControlsPanel.value = false
-  }
-}
-
-const handlePointerDownOutsideControls = (event: PointerEvent) => {
-  if (!isMobileViewport.value || !showControlsPanel.value) return
-
-  const target = event.target
-  if (!(target instanceof Node)) return
-  if (controlsShellRef.value?.contains(target)) return
-
-  closeControlsPanel()
-}
+const {
+  shellRef: controlsShellRef,
+  isMobileViewport,
+  isOpen: showControlsPanel,
+  toggle: toggleControlsPanel,
+  close: closeControlsPanel,
+} = useMobileActionPanel()
 
 const waitForNextFrame = () =>
   new Promise<void>((resolve) => {
     requestAnimationFrame(() => resolve())
   })
 
-const handleScroll = () => {
-  showBackToTop.value = window.scrollY > 240
-  const distanceToBottom =
-    document.documentElement.scrollHeight - (window.scrollY + window.innerHeight)
-  showGoToBottom.value = distanceToBottom > 240
-}
-
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
-const scrollToBottom = () => {
-  window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+const handleBeforeUnload = () => {
+  editorRef.value?.saveToLocalStorage()
 }
 
 // 开始自动保存
@@ -169,26 +124,14 @@ const openExample = () => {
 onMounted(() => {
   editorRef.value?.restoreFromLocalStorage()
   startAutoSave()
-  handleScroll()
-  mobileQuery = window.matchMedia('(max-width: 768px)')
-  syncMobileState()
-  mobileQuery.addEventListener('change', syncMobileState)
-  document.addEventListener('pointerdown', handlePointerDownOutsideControls)
-  window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('beforeunload', handleBeforeUnload)
 })
 
 // 监听组件卸载
 onUnmounted(() => {
   stopAutoSave()
   editorRef.value?.saveToLocalStorage() // 卸载前保存一次
-  document.removeEventListener('pointerdown', handlePointerDownOutsideControls)
-  window.removeEventListener('scroll', handleScroll)
-  mobileQuery?.removeEventListener('change', syncMobileState)
-})
-
-// 监听页面关闭
-window.addEventListener('beforeunload', () => {
-  editorRef.value?.saveToLocalStorage()
+  window.removeEventListener('beforeunload', handleBeforeUnload)
 })
 </script>
 
@@ -244,26 +187,7 @@ window.addEventListener('beforeunload', () => {
       </div>
     </div>
     <LyricsEditor ref="editorRef" :isEditMode="isEditMode" />
-    <button
-      v-show="showGoToBottom"
-      class="go-to-bottom-btn"
-      type="button"
-      title="去底部"
-      aria-label="去底部"
-      @click="scrollToBottom"
-    >
-      <ChevronDown class="h-5 w-5" />
-    </button>
-    <button
-      v-show="showBackToTop"
-      class="back-to-top-btn"
-      type="button"
-      title="返回顶部"
-      aria-label="返回顶部"
-      @click="scrollToTop"
-    >
-      <ChevronUp class="h-5 w-5" />
-    </button>
+    <ScrollJumpButtons />
   </div>
 </template>
 
@@ -340,54 +264,6 @@ h1 {
   display: none;
 }
 
-.back-to-top-btn {
-  position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  z-index: 40;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid var(--floating-border);
-  border-radius: 9999px;
-  background: var(--floating-bg);
-  color: var(--text-contrast);
-  cursor: pointer;
-  box-shadow: var(--floating-shadow);
-  transition: all 0.2s ease;
-}
-
-.back-to-top-btn:hover {
-  transform: translateY(-2px);
-  background: var(--floating-bg-hover);
-}
-
-.go-to-bottom-btn {
-  position: fixed;
-  left: 1.5rem;
-  bottom: 1.5rem;
-  z-index: 40;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid var(--floating-border);
-  border-radius: 9999px;
-  background: var(--floating-bg);
-  color: var(--text-contrast);
-  cursor: pointer;
-  box-shadow: var(--floating-shadow);
-  transition: all 0.2s ease;
-}
-
-.go-to-bottom-btn:hover {
-  transform: translateY(-2px);
-  background: var(--floating-bg-hover);
-}
-
 @media (max-width: 768px) {
   .title-container {
     margin-bottom: 1.25rem;
@@ -418,16 +294,6 @@ h1 {
   .icon-btn {
     width: 2.5rem;
     height: 2.5rem;
-  }
-
-  .back-to-top-btn {
-    right: 1rem;
-    bottom: 1rem;
-  }
-
-  .go-to-bottom-btn {
-    left: 1rem;
-    bottom: 1rem;
   }
 }
 

@@ -1,52 +1,27 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LyricsEditor from '@/components/LyricsEditor.vue'
 import MobileHamburgerButton from '@/components/ui/MobileHamburgerButton.vue'
+import ScrollJumpButtons from '@/components/ui/ScrollJumpButtons.vue'
+import { useMobileActionPanel } from '@/composables/useMobileActionPanel'
 import { getSongById, getSongs } from '@/lib/songCatalog'
-import { ChevronDown, ChevronUp } from 'lucide-vue-next'
 
 const route = useRoute()
 const router = useRouter()
 const editorRef = ref<InstanceType<typeof LyricsEditor> | null>(null)
-const headerActionsShellRef = ref<HTMLElement | null>(null)
 const songs = getSongs()
 const copyStatus = ref('')
 const EDITOR_STORAGE_KEY = 'japanese-lyrics-editor-state'
-const showBackToTop = ref(false)
-const showGoToBottom = ref(false)
 const isCopyToastError = computed(() => copyStatus.value.includes('失败'))
-const isMobileViewport = ref(false)
-const showHeaderActions = ref(false)
+const {
+  shellRef: headerActionsShellRef,
+  isMobileViewport,
+  isOpen: showHeaderActions,
+  toggle: toggleHeaderActions,
+  close: closeHeaderActions,
+} = useMobileActionPanel()
 let copyStatusTimer: number | null = null
-let mobileQuery: MediaQueryList | null = null
-
-const syncMobileState = () => {
-  isMobileViewport.value = mobileQuery?.matches ?? false
-  if (!isMobileViewport.value) {
-    showHeaderActions.value = false
-  }
-}
-
-const toggleHeaderActions = () => {
-  showHeaderActions.value = !showHeaderActions.value
-}
-
-const closeHeaderActions = () => {
-  if (isMobileViewport.value) {
-    showHeaderActions.value = false
-  }
-}
-
-const handlePointerDownOutsideHeaderActions = (event: PointerEvent) => {
-  if (!isMobileViewport.value || !showHeaderActions.value) return
-
-  const target = event.target
-  if (!(target instanceof Node)) return
-  if (headerActionsShellRef.value?.contains(target)) return
-
-  closeHeaderActions()
-}
 
 const selectedSongId = computed(() => {
   if (typeof route.params.songId === 'string') return route.params.songId
@@ -120,34 +95,7 @@ const editCurrentSong = async () => {
   closeHeaderActions()
 }
 
-const handleScroll = () => {
-  showBackToTop.value = window.scrollY > 240
-  const distanceToBottom =
-    document.documentElement.scrollHeight - (window.scrollY + window.innerHeight)
-  showGoToBottom.value = distanceToBottom > 240
-}
-
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
-const scrollToBottom = () => {
-  window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
-}
-
-onMounted(() => {
-  handleScroll()
-  mobileQuery = window.matchMedia('(max-width: 768px)')
-  syncMobileState()
-  mobileQuery.addEventListener('change', syncMobileState)
-  document.addEventListener('pointerdown', handlePointerDownOutsideHeaderActions)
-  window.addEventListener('scroll', handleScroll, { passive: true })
-})
-
 onUnmounted(() => {
-  document.removeEventListener('pointerdown', handlePointerDownOutsideHeaderActions)
-  window.removeEventListener('scroll', handleScroll)
-  mobileQuery?.removeEventListener('change', syncMobileState)
   if (copyStatusTimer !== null) {
     window.clearTimeout(copyStatusTimer)
   }
@@ -210,27 +158,7 @@ onUnmounted(() => {
       </section>
     </div>
 
-    <button
-      v-show="showGoToBottom"
-      class="go-to-bottom-btn"
-      type="button"
-      title="去底部"
-      aria-label="去底部"
-      @click="scrollToBottom"
-    >
-      <ChevronDown class="h-5 w-5" />
-    </button>
-
-    <button
-      v-show="showBackToTop"
-      class="back-to-top-btn"
-      type="button"
-      title="返回顶部"
-      aria-label="返回顶部"
-      @click="scrollToTop"
-    >
-      <ChevronUp class="h-5 w-5" />
-    </button>
+    <ScrollJumpButtons />
 
     <div
       v-show="copyStatus"
@@ -283,49 +211,8 @@ onUnmounted(() => {
   font-family: 'Noto Serif JP', 'Noto Serif', serif;
 }
 
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem 0.75rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 0.375rem;
-  background: transparent;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.875rem;
-  line-height: 1.2;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.back-btn:hover {
-  background: var(--surface-soft);
-  color: var(--text-primary);
-}
-
-.copy-link-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem 0.75rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 0.375rem;
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-  line-height: 1.2;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.copy-link-btn:hover {
-  background: var(--surface-soft);
-  color: var(--text-primary);
-}
-
+.back-btn,
+.copy-link-btn,
 .edit-song-btn {
   display: inline-flex;
   align-items: center;
@@ -342,6 +229,12 @@ onUnmounted(() => {
   transition: all 0.15s ease;
 }
 
+.back-btn {
+  text-decoration: none;
+}
+
+.back-btn:hover,
+.copy-link-btn:hover,
 .edit-song-btn:hover {
   background: var(--surface-soft);
   color: var(--text-primary);
@@ -422,54 +315,6 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-}
-
-.back-to-top-btn {
-  position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  z-index: 40;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid var(--floating-border);
-  border-radius: 9999px;
-  background: var(--floating-bg);
-  color: var(--text-contrast);
-  cursor: pointer;
-  box-shadow: var(--floating-shadow);
-  transition: all 0.2s ease;
-}
-
-.go-to-bottom-btn {
-  position: fixed;
-  left: 1.5rem;
-  bottom: 1.5rem;
-  z-index: 40;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid var(--floating-border);
-  border-radius: 9999px;
-  background: var(--floating-bg);
-  color: var(--text-contrast);
-  cursor: pointer;
-  box-shadow: var(--floating-shadow);
-  transition: all 0.2s ease;
-}
-
-.go-to-bottom-btn:hover {
-  transform: translateY(-2px);
-  background: var(--floating-bg-hover);
-}
-
-.back-to-top-btn:hover {
-  transform: translateY(-2px);
-  background: var(--floating-bg-hover);
 }
 
 .copy-toast {
@@ -574,16 +419,6 @@ onUnmounted(() => {
     padding: 0.4rem 0.75rem;
     white-space: nowrap;
     scroll-snap-align: start;
-  }
-
-  .back-to-top-btn {
-    right: 1rem;
-    bottom: 1rem;
-  }
-
-  .go-to-bottom-btn {
-    left: 1rem;
-    bottom: 1rem;
   }
 
   .copy-toast {
