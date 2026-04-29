@@ -227,7 +227,7 @@ h1 {
   color: var(--text-primary);
   margin: 0;
   font-size: clamp(1.6rem, 4vw, 2.3rem);
-  font-family: 'Noto Serif JP', 'Noto Serif', serif;
+  /* font-family: 'Noto Serif JP', 'Noto Serif', serif; */
 }
 
 .icon-btn {
